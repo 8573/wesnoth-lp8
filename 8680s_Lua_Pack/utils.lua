@@ -46,7 +46,7 @@ function lp8.trim(s)
 end
 
 function lp8.subst(s)
-	return wesnoth.tovconfig {s=s}.s
+	return wesnoth.tovconfig {s = tostring(s)}.s
 end
 
 function lp8.interp(s, e)
