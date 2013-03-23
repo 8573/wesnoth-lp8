@@ -13,4 +13,3 @@ if not namespace_of_8680s_Lua_Pack then
 end
 
 return lp8.require
-
