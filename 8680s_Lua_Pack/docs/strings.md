@@ -16,12 +16,16 @@ Returns a copy of `string` with all whitespace removed.
 E.g., `lp8.gtrim " 8680’s Lua Pack  "` returns `"8680’sLuaPack"`.
 
 
-`lp8.eval(string, env)`
+`lp8.eval(string, env, err)`
 -------------------------------------------------------------------------------
 Evaluates `string` as a Lua expression.
 
 `env` is the environment in which to evaluate the expression; it defaults to
 the global environment.
+
+`err` is an optional function to be called with `string` as an argument in the
+event of an error; it defaults to issuing a generic error message:
+	"can’t eval <string>"
 
 
 `lp8.subst(string)`

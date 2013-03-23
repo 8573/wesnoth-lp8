@@ -14,9 +14,10 @@ function lp8.gtrim(s)
 	return ts(s): gsub("%s+", "")
 end
 
-local function eval(s, e)
+local function eval(s, e, err)
 	s = ts(s)
-	return (lp8.load("return " .. s) or error(("can’t eval %q"): format(s)))()
+	return (lp8.load("return " .. s) or type(err) == 'function'
+		and err(s) or error(("can’t eval %q"): format(s)))()
 end
 lp8.eval = eval
 
