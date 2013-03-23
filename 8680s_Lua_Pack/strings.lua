@@ -10,6 +10,10 @@ function lp8.trim(s)
 	return ts(s): match "^%s*(.*%S)" or ""
 end
 
+function lp8.gtrim(s)
+	return ts(s): gsub("%s+", "")
+end
+
 local function eval(s, e)
 	s = ts(s)
 	return (lp8.load("return " .. s) or error(("can’t eval %q"): format(s)))()
