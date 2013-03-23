@@ -40,6 +40,11 @@ end
 
 lp8.wml_vars = lp8.helper.set_wml_var_metatable {}
 
+function lp8.trim(s)
+	-- trim5 from [http://Lua-Users.org/wiki/StringTrim].
+	return tostring(s): match "^%s*(.*%S)" or ""
+end
+
 function lp8.subst(s)
 	return wesnoth.tovconfig {s=s}.s
 end
