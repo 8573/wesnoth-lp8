@@ -1,7 +1,7 @@
 
 -- By 8680.
 
-local function load8(ld, env, name)
+function lp8.load(ld, env, name)
 	if not loadstring then
 		return load(ld, name, nil, env)
 	else
@@ -12,13 +12,6 @@ local function load8(ld, env, name)
 		return ld and setfenv(ld, env)
 	end
 end
-lp8.load = load8
-
-local function eval(s, e)
-	s = tostring(s)
-	return (load8("return " .. s) or error(("can’t eval %q"): format(s)))()
-end
-lp8.eval = eval
 
 function lp8.flip(x)
 	local ty = type(x)
@@ -39,18 +32,3 @@ function lp8.flip(x)
 end
 
 lp8.wml_vars = lp8.helper.set_wml_var_metatable {}
-
-function lp8.trim(s)
-	-- trim5 from [http://Lua-Users.org/wiki/StringTrim].
-	return tostring(s): match "^%s*(.*%S)" or ""
-end
-
-function lp8.subst(s)
-	return wesnoth.tovconfig {s = tostring(s)}.s
-end
-
-function lp8.interp(s, e)
-	return tostring(s):
-		gsub("%?%b{}", function(x) return eval(x: sub(2, -1), e) end)
-end
-
