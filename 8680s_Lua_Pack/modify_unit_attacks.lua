@@ -2,20 +2,15 @@
 -- By 8680, with help from battlestar (testing) and Elvish_Hunter (suggestion
 -- for $this_attack).
 
+lp8.require "strings"
 lp8.require "match_attack"
 
-local load, h, stringAttackKeys, numericAttackKeys, varSubstBox =
-	loadstring or load, lp8.helper
+local ts, h, stringAttackKeys, numericAttackKeys =
+	tostring, lp8.helper
 	{	name = true, description = true, range = true, type = true,
 		icon = true	},
 	{	damage = true, number = true, movement_used = true,
 		attack_weight = true, defense_weight = true },
-	{}
-
-local function invalidExprError(k, v)
-	h.wml_error(
-		("Invalid expression: [modify_unit_attacks]%s=%q"): format(k, v))
-end
 
 function wesnoth.wml_actions.modify_unit_attacks(cfg)
 	local units, attackFilter =
@@ -28,37 +23,31 @@ function wesnoth.wml_actions.modify_unit_attacks(cfg)
 			if lp8.matchAttack(atk, attackFilter) then
 				modifiedAttacks[atk] = {}
 				for k, v in pairs(cfg) do
+					local function exprErr()
+						h.wml_error(
+							("Invalid expression: [modify_unit_attacks]%s=%q"):
+								format(k, ts(v)))
+					end
 					wesnoth.set_variable("this_attack", atk)
-					-- FIXME: h.parsed doesn’t touch plain tables.
-					-- Write a variable interpolation function.
-					varSubstBox.x = tostring(v)
-					local x = h.parsed(varSubstBox).x:
-						gsub("%?", tostring(atk[k]))
+					local x = lp8.subst(v): gsub("%?", ts(atk[k]))
 					if stringAttackKeys[k] then
 						modifiedAttacks[atk][k] = x
 					elseif numericAttackKeys[k] then
 						modifiedAttacks[atk][k] = h.round(
-							tonumber(x)
-							or tonumber(
-								(	load("return " .. x)
-									or invalidExprError(k,v)
-								)()
-							)
-							or invalidExprError(k,v)
-						)
-					elseif type(v) == "table" or type(v) == "userdata"
-					then
+							tonumber(x) or tonumber(lp8.eval(x, nil, exprErr))
+							or exprErr())
+					elseif type(v) == "table" or type(v) == "userdata" then
 						local t = v[1]
 						if t == "specials" then
 							h.wml_error "Not yet implemented: [modify_unit_attacks][specials]"
 						elseif t ~= "filter" and t ~= "filter_attack" then
 							h.wml_error(
 								"Unrecognized subtag: [modify_unit_attacks]["
-								.. tostring(t) .. "]")
+								.. ts(t) .. "]")
 						end
 					else
 						h.wml_error("Unrecognized key: [modify_unit_attacks]"
-							.. k .. "=")
+							.. ts(k) .. "=")
 					end
 				end
 			end
