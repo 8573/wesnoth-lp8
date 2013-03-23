@@ -1,14 +1,16 @@
 
 -- By 8680.
 
-local h = lp8.helper
+lp8.require "strings"
+
+local h, tn = lp8.helper, tonumber
 
 local function hasDamage(attack, damages)
-	local d = tonumber(attack.damage)
-	for a, b in damages: gmatch "[^%s,][^,]*" do
-		a, b = tonumber(a) or a: match "^(%d+)%-(%d+)$"
+	local d = tn(attack.damage)
+	for a, b in tostring(damages): gmatch "[^%s,][^,]*" do
+		a, b = tn(a) or lp8.gtrim(a): match "^(%d+)%-(%d+)$"
 		if b then
-			return d >= tonumber(a) and d <= tonumber(b)
+			return d >= tn(a) and d <= tn(b)
 		else
 			return d == a
 		end
