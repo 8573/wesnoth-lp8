@@ -1,0 +1,16 @@
+8680s_Lua_Pack/docs/match_attack.md
+8680s_Lua_Pack/docs/modify_unit_attacks.cfg
+8680s_Lua_Pack/docs/utils.md
+8680s_Lua_Pack/docs/wml-wml.cfg
+8680s_Lua_Pack/docs/wml.md
+8680s_Lua_Pack/_load.lua
+8680s_Lua_Pack/_main.cfg
+8680s_Lua_Pack/_server.pbl
+8680s_Lua_Pack/HELP
+8680s_Lua_Pack/LICENSE
+8680s_Lua_Pack/match_attack.lua
+8680s_Lua_Pack/modify_unit_attacks.lua
+8680s_Lua_Pack/serialize.lua
+8680s_Lua_Pack/utils.lua
+8680s_Lua_Pack/wml.lua
+readme.md
