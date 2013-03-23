@@ -28,6 +28,13 @@ Evaluates `string` as a Lua expression.
 the global environment.
 
 
+`lp8.trim(string)`
+-------------------------------------------------------------------------------
+Returns a copy of `string` sans leading and trailing whitespace.
+
+E.g., `lp8.trim " lp8  "` returns `"lp8"`.
+
+
 `lp8.flip(x)`
 -------------------------------------------------------------------------------
 Flips `x` however makes sense.
