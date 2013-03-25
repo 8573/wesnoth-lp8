@@ -1,6 +1,16 @@
 
 -- By 8680.
 
+local h = lp8.helper
+
+function lp8.nyil(f)
+	error("Not yet implemented: " .. f, 2)
+end
+
+function lp8.nyiw(f)
+	h.wml_error("Not yet implemented: " .. f)
+end
+
 function lp8.load(ld, env, name)
 	if not loadstring then
 		return load(ld, name, nil, env)
@@ -31,4 +41,4 @@ function lp8.flip(x)
 	error("don’t know how to flip a " .. ty)
 end
 
-lp8.wml_vars = lp8.helper.set_wml_var_metatable {}
+lp8.wml_vars = h.set_wml_var_metatable {}
