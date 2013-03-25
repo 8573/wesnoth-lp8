@@ -9,14 +9,27 @@ An `index` argument can be omitted, in which case it defaults to 1.
 
 	{"gold",{ side=1, amount=100 }}
 
-Not just the contents, like what `helper.get_child` returns, e.g.:
+Not just the cfg contents, like what `helper.get_child` returns, e.g.:
 
 	{ side=1, amount=100 }
 
 
+`lp8.is_cfg(x)`
+-------------------------------------------------------------------------------
+Returns whether `x` is (or at least looks like) a WML cfg object (userdatas
+only; cfgs represented as tables, like `unit_proxy.__cfg` and
+`userdata_cfg.__parsed`, don’t count).
+
+
 `lp8.is_tag(x)`
 -------------------------------------------------------------------------------
-Returns whether `x` is (or at least looks like) a WML tag object.
+Returns whether `x` is (or at least looks like) a WML tag object (both
+userdatas and tables count).
+
+
+`lp8.is_unit_proxy(x)`
+-------------------------------------------------------------------------------
+Returns whether `x` is (or at least looks like) a unit proxy.
 
 
 `lp8.match_tag(tag, filter)`
@@ -102,4 +115,12 @@ Returns a list containing the contents of each removed subtag.
 `lp8.erase_subtags(cfg, filter)`
 -------------------------------------------------------------------------------
 Like `remove_subtags`, but doesn’t save the erased subtags.
+
+
+`lp8.to_unit_cfg(u)`
+-------------------------------------------------------------------------------
+If `u` is a unit proxy, returns `u.__cfg`. If `u` is already a unit cfg,
+returns it unharmed.
+
+Secondarily returns a Boolean indicating whether `u` was a proxy.
 

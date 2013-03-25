@@ -1,7 +1,7 @@
 
 -- By 8680.
 
-local match
+local type, match = type
 
 local function getSubtag(cfg, f, n, i)
 	n = n or 1
@@ -105,6 +105,11 @@ function lp8.erase_subtags(cfg, f)
 	end
 end
 
+local function isCfg(x)
+	return getmetatable(x) == 'wml object'
+end
+lp8.is_cfg = isCfg
+
 local function isTag(x)
 	if type(x) ~= 'userdata' and type(x) ~= 'table' then
 		return false
@@ -113,6 +118,10 @@ local function isTag(x)
 	return s and c and (type(c) == 'table' or type(c) == 'userdata')
 end
 lp8.is_tag = isTag
+
+function lp8.is_unit_proxy(x)
+	return getmetatable(x) == 'unit'
+end
 
 function match(t, f)
 	local ty = type(f)
@@ -158,4 +167,11 @@ lp8.match_tag = match
 
 function lp8.tags_equal(x, y)
 	return match(x, y) and match(y, x)
+end
+
+function lp8.to_unit_cfg(u)
+	return lp8.is_unit_proxy(u) and u.__cfg
+		or (type(u) == 'table' or type(u) == 'userdata') and u or error(
+			("expected unit proxy or unit cfg; received %s with metatable %q"):
+				format(type(u), tostring(getmetatable(u))))
 end
