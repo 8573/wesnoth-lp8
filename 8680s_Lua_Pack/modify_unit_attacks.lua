@@ -2,6 +2,7 @@
 -- By 8680, with help from battlestar (testing) and Elvish_Hunter (suggestion
 -- for $this_attack).
 
+lp8.require "utils"
 lp8.require "strings"
 lp8.require "match_attack"
 
@@ -39,7 +40,7 @@ function wesnoth.wml_actions.modify_unit_attacks(cfg)
 					elseif type(v) == "table" or type(v) == "userdata" then
 						local t = v[1]
 						if t == "specials" then
-							h.wml_error "Not yet implemented: [modify_unit_attacks][specials]"
+							lp8.nyiw "[modify_unit_attacks][specials]"
 						elseif t ~= "filter" and t ~= "filter_attack" then
 							h.wml_error(
 								"Unrecognized subtag: [modify_unit_attacks]["
