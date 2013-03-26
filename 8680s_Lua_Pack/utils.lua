@@ -26,7 +26,10 @@ function lp8.load(ld, env, name)
 	end
 end
 
-function lp8.flip(x)
+function lp8.flip(x, b)
+	if b == false then
+		return x
+	end
 	local ty = type(x)
 	if ty == 'table' then
 		local r = {}
@@ -34,12 +37,12 @@ function lp8.flip(x)
 			r[#r+1] = x[i]
 		end
 		return r
+	elseif ty == 'boolean' then
+		return not x
 	elseif ty == 'string' then
 		return x: reverse()
 	elseif ty == 'number' then
 		return -x
-	elseif ty == 'boolean' then
-		return not x
 	end
 	error("don’t know how to flip a " .. ty)
 end

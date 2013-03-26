@@ -20,7 +20,7 @@ environment.
 `source` is an optional name for whatever’s being loaded, for error reporting.
 
 
-`lp8.flip(x)`
+`lp8.flip(x, control)`
 -------------------------------------------------------------------------------
 Flips `x` however makes sense.
 
@@ -29,6 +29,8 @@ Flips `x` however makes sense.
 * If `x` is a Boolean, returns `not x`.
 * If `x` is a table, returns a new table with all values of `x` with integer
   keys from `1` to `#x`, in reverse order.
+
+If `control` is false (but not nil), `x` is not flipped but returned as is.
 
 
 `lp8.wml_vars`
