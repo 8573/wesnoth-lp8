@@ -1,6 +1,8 @@
 
 -- By 8680.
 
+lp8.require "utils"
+
 local type, match = type
 
 local function getSubtag(cfg, f, n, i)
@@ -130,10 +132,10 @@ function match(t, f)
 	elseif ty == 'function' then
 		return f(t)
 	elseif isTag(f) then
-		if t[1] ~= f[1] then
-			return false
-		end
 		t, f = t[2], f[2]
+		if t == f then
+			return true
+		end
 		for k, v in pairs(f) do
 			if type(k) == 'string' and t[k] ~= v then
 				return false
@@ -142,9 +144,9 @@ function match(t, f)
 		local n, i = {}, {}
 		for k, v in ipairs(f) do
 			if isTag(v) then
-				k = v[1]; v, i[k] = getSubtag(t, v, n[k], i[k])
+				k = v[1]; v, i[k] = getSubtag(t, {lp8.AND, k, v}, n[k], i[k])
 				if v then
-					tn[k] = (tn[k] or 1) + 1
+					n[k] = (n[k] or 1) + 1
 				else
 					return false
 				end
@@ -152,12 +154,16 @@ function match(t, f)
 		end
 		return true
 	elseif ty == 'table' then
-		for i = 1, #f do
-			if match(t, f[i]) then
-				return true
+		ty = f[1]
+		if ty ~= lp8.AND and ty ~= lp8.OR then
+			error "expected Boolean operation constant as first element of tag filter list"
+		end
+		for i = 2, #f do
+			if lp8.flip(match(t, f[i]), ty ~= lp8.OR) then
+				return ty == lp8.OR
 			end
 		end
-		return false
+		return ty ~= lp8.OR
 	elseif ty == 'boolean' then
 		return f
 	end

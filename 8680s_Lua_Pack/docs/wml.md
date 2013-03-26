@@ -45,7 +45,10 @@ filters, or nil.
   key in `filter`, `tag` has a key with the same name and value, and, for each
   subtag in `filter`, `tag` has a subtag with the same name for which
   `match_tag(tag_subtag, filter_subtag)` returns true.
-* A list filter matches if any of its contained filters match.
+* A list filter with `lp8.AND` as its first element matches if all of its
+  other elements match.
+* A list filter with `lp8.OR` as its first element matches if any of its
+  other elements match.
 * A Boolean filter matches if it is true.
 * A nil filter always matches (like an empty filter in WML).
 
@@ -55,6 +58,11 @@ This is the function used to match tags to filters by the other functions.
 `lp8.tags_equal(tag1, tag2)`
 -------------------------------------------------------------------------------
 Returns whether `tag1` and `tag2` are structurally equal.
+
+
+`lp8.is_parent(tag1, tag2)`
+-------------------------------------------------------------------------------
+Returns whether `tag1` is the parent of `tag2`.
 
 
 `lp8.get_subtag(cfg, filter, index)`
