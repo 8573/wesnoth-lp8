@@ -35,3 +35,8 @@ Flips `x` however makes sense.
 -------------------------------------------------------------------------------
 A WML variables interface table, as created by `helper.set_wml_var_metatable`.
 
+
+`lp8.AND`, `lp8.OR`
+-------------------------------------------------------------------------------
+Opaque constants. Their semantics are defined by functions that take them.
+

@@ -3,6 +3,9 @@
 
 local h = lp8.helper
 
+lp8.AND = {}
+lp8.OR = {}
+
 function lp8.nyil(f)
 	error("Not yet implemented: " .. f, 2)
 end

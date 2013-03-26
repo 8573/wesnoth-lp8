@@ -5,6 +5,7 @@
   another tag.
 * Added unmodify library.
 * Added wml/{is_cfg,is_unit_proxy,to_unit_cfg} functions.
+* Added utils/{AND,OR} constants.
 
 0.7.0
 ===============================================================================
