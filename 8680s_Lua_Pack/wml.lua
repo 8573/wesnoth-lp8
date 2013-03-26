@@ -170,8 +170,8 @@ function lp8.tags_equal(x, y)
 end
 
 function lp8.to_unit_cfg(u)
-	return lp8.is_unit_proxy(u) and u.__cfg
+	local p = lp8.is_unit_proxy(u); return p and u.__cfg
 		or (type(u) == 'table' or type(u) == 'userdata') and u or error(
 			("expected unit proxy or unit cfg; received %s with metatable %q"):
-				format(type(u), tostring(getmetatable(u))))
+				format(type(u), tostring(getmetatable(u)))), p
 end
