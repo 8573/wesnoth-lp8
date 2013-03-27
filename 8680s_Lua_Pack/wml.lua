@@ -14,7 +14,9 @@ local function isTag(x)
 	if type(x) ~= 'userdata' and type(x) ~= 'table' then
 		return false
 	end
-	local s, c = pcall(function() return type(x[1]) == 'string' and x[2] end)
+	local s, c = pcall(function()
+		return #x == 2 and type(x[1]) == 'string' and x[2]
+	end)
 	return s and c and (type(c) == 'table' or type(c) == 'userdata')
 end
 lp8.is_tag = isTag
