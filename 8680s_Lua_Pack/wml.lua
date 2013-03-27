@@ -5,6 +5,40 @@ lp8.require "utils"
 
 local type, match = type
 
+local function isCfg(x)
+	return getmetatable(x) == 'wml object'
+end
+lp8.is_cfg = isCfg
+
+local function isTag(x)
+	if type(x) ~= 'userdata' and type(x) ~= 'table' then
+		return false
+	end
+	local s, c = pcall(function() return type(x[1]) == 'string' and x[2] end)
+	return s and c and (type(c) == 'table' or type(c) == 'userdata')
+end
+lp8.is_tag = isTag
+
+local function toCfg(x)
+	return isTag(x) and x[2] or x
+end
+
+function lp8.is_subtag(p, c)
+	for i = 1, #p do
+		if p[i] == c then
+			return true
+		end
+	end
+end
+
+function lp8.is_child(p, c)
+	for i = 1, #p do
+		if p[i][2] == c then
+			return true
+		end
+	end
+end
+
 local function getSubtag(cfg, f, n, i)
 	n = n or 1
 	for i = i or 1, #cfg do
@@ -106,20 +140,6 @@ function lp8.erase_subtags(cfg, f)
 		end
 	end
 end
-
-local function isCfg(x)
-	return getmetatable(x) == 'wml object'
-end
-lp8.is_cfg = isCfg
-
-local function isTag(x)
-	if type(x) ~= 'userdata' and type(x) ~= 'table' then
-		return false
-	end
-	local s, c = pcall(function() return type(x[1]) == 'string' and x[2] end)
-	return s and c and (type(c) == 'table' or type(c) == 'userdata')
-end
-lp8.is_tag = isTag
 
 function lp8.is_unit_proxy(x)
 	return getmetatable(x) == 'unit'

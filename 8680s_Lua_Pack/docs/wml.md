@@ -55,14 +55,24 @@ filters, or nil.
 This is the function used to match tags to filters by the other functions.
 
 
+`lp8.cfgs_equal(cfg1, cfg2)`
+-------------------------------------------------------------------------------
+Returns whether `cfg1` and `cfg2` are structurally equal.
+
+
 `lp8.tags_equal(tag1, tag2)`
 -------------------------------------------------------------------------------
 Returns whether `tag1` and `tag2` are structurally equal.
 
 
-`lp8.is_parent(tag1, tag2)`
+`lp8.is_subtag(p, c)`
 -------------------------------------------------------------------------------
-Returns whether `tag1` is the parent of `tag2`.
+Returns whether the tag or cfg `p` contains the tag `c`.
+
+
+`lp8.is_child(p, c)`
+-------------------------------------------------------------------------------
+Returns whether the tag or cfg `p` contains a tag whose content is the cfg `c`.
 
 
 `lp8.get_subtag(cfg, filter, index)`
