@@ -75,62 +75,62 @@ Returns whether the tag or cfg `p` contains the tag `c`.
 Returns whether the tag or cfg `p` contains a tag whose content is the cfg `c`.
 
 
-`lp8.get_subtag(cfg, filter, index)`
+`lp8.get_subtag(p, filter, index)`
 -------------------------------------------------------------------------------
-Returns the `index`-th matching subtag of `cfg`.
+Returns the `index`-th matching subtag of the tag or cfg `p`.
 
 
-`lp8.get_child(cfg, filter, index)`
+`lp8.get_child(p, filter, index)`
 -------------------------------------------------------------------------------
 Returns the contents (like `helper.get_child`) of the `index`-th matching
-subtag of `cfg`.
+subtag of the tag or cfg `p`.
 
 
-`lp8.get_subtags(cfg, filter)`
+`lp8.get_subtags(p, filter)`
 -------------------------------------------------------------------------------
-Returns a list containing each matching subtag of `cfg`.
+Returns a list containing each matching subtag of the tag or cfg `p`.
 
 
-`lp8.get_children(cfg, filter)`
+`lp8.get_children(p, filter)`
 -------------------------------------------------------------------------------
-Returns a list containing the contents of each matching subtag of `cfg`.
+Returns a list containing the contents of each matching subtag of tag/cfg `p`.
 
 
-`lp8.subtags(cfg, filter)`
+`lp8.subtags(p, filter)`
 -------------------------------------------------------------------------------
-Returns an iterator over all matching subtags of `cfg`.
+Returns an iterator over all matching subtags of the tag or cfg `p`.
 
 
-`lp8.chilren(cfg, filter)`
+`lp8.chilren(p, filter)`
 -------------------------------------------------------------------------------
-Returns an iterator over the contents of all matching subtags of `cfg`.
+Returns an iterator over the contents of all matching subtags of tag/cfg `p`.
 
 
-`lp8.remove_subtag(cfg, filter, index)`
+`lp8.remove_subtag(p, filter, index)`
 -------------------------------------------------------------------------------
-Removes the `index`-th matching subtag of `cfg`.
+Removes the `index`-th matching subtag of the tag or cfg `p`.
 Returns the removed subtag.
 
 
-`lp8.remove_child(cfg, filter, index)`
+`lp8.remove_child(p, filter, index)`
 -------------------------------------------------------------------------------
-Removes the `index`-th matching subtag of `cfg`.
+Removes the `index`-th matching subtag of the tag or cfg `p`.
 Returns the contents of the removed subtag.
 
 
-`lp8.remove_subtags(cfg, filter)`
+`lp8.remove_subtags(p, filter)`
 -------------------------------------------------------------------------------
-Removes each matching subtag of `cfg`.
+Removes each matching subtag of the tag or cfg `p`.
 Returns a list containing each removed subtag.
 
 
-`lp8.remove_children(cfg, filter)`
+`lp8.remove_children(p, filter)`
 -------------------------------------------------------------------------------
-Removes each matching subtag of `cfg`.
+Removes each matching subtag of the tag or cfg `p`.
 Returns a list containing the contents of each removed subtag.
 
 
-`lp8.erase_subtags(cfg, filter)`
+`lp8.erase_subtags(p, filter)`
 -------------------------------------------------------------------------------
 Like `remove_subtags`, but doesn’t save the erased subtags.
 

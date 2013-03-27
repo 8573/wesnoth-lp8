@@ -26,6 +26,7 @@ local function toCfg(x)
 end
 
 function lp8.is_subtag(p, c)
+	p = toCfg(p)
 	for i = 1, #p do
 		if p[i] == c then
 			return true
@@ -34,6 +35,7 @@ function lp8.is_subtag(p, c)
 end
 
 function lp8.is_child(p, c)
+	p = toCfg(p)
 	for i = 1, #p do
 		if p[i][2] == c then
 			return true
@@ -41,51 +43,52 @@ function lp8.is_child(p, c)
 	end
 end
 
-local function getSubtag(cfg, f, n, i)
+local function getSubtag(p, f, n, i)
+	p = toCfg(p)
 	n = n or 1
-	for i = i or 1, #cfg do
-		if match(cfg[i], f) then
+	for i = i or 1, #p do
+		if match(p[i], f) then
 			n = n-1
 			if n <= 0 then
-				return cfg[i], i
+				return p[i], i
 			end
 		end
 	end
 end
 lp8.get_subtag = getSubtag
 
-function lp8.subtags(cfg, f, i)
+function lp8.subtags(p, f, i)
 	return function(s)
-		local t, i = getSubtag(cfg, f, 1, s.i)
+		local t, i = getSubtag(p, f, 1, s.i)
 		s.i = i
 		return t, i
 	end, {i = i or 1}
 end
 
-function lp8.children(cfg, f, i)
+function lp8.children(p, f, i)
 	return function(s)
-		local c, i = getSubtag(cfg, f, 1, s.i)
+		local c, i = getSubtag(p, f, 1, s.i)
 		s.i = i
 		return c[2], i
 	end, {i = i or 1}
 end
 
-function lp8.get_subtags(cfg, f)
+function lp8.get_subtags(p, f)
 	local r = {}
-	for t in lp8.subtags(cfg, f) do
+	for t in lp8.subtags(p, f) do
 		r[#r+1] = t
 	end
 	return r
 end
 
-function lp8.get_child(cfg, f, n, i)
-	cfg, i = getSubtag(cfg, f, n, i)
-	return cfg[2], i
+function lp8.get_child(p, f, n, i)
+	p, i = getSubtag(p, f, n, i)
+	return p[2], i
 end
 
-function lp8.get_children(cfg, f)
+function lp8.get_children(p, f)
 	local r = {}
-	for c in lp8.children(cfg, f) do
+	for c in lp8.children(p, f) do
 		r[#r+1] = c
 	end
 	return r
@@ -93,14 +96,15 @@ end
 
 local tr = table.remove
 
-local function removeSubtag(cfg, f, n, i)
+local function removeSubtag(p, f, n, i)
+	p = toCfg(p)
 	n = n or 1
-	for i = i or 1, #cfg do
-		if match(cfg[i], f) then
+	for i = i or 1, #p do
+		if match(p[i], f) then
 			n = n-1
 			if n <= 0 then
-				local t = cfg[i]
-				tr(cfg, i)
+				local t = p[i]
+				tr(p, i)
 				return t, i
 			end
 		end
@@ -108,37 +112,40 @@ local function removeSubtag(cfg, f, n, i)
 end
 lp8.remove_subtag = removeSubtag
 
-function lp8.remove_child(cfg, f, n, i)
-	cfg, i = removeSubtag(cfg, f, n, i)
-	return cfg[2], i
+function lp8.remove_child(p, f, n, i)
+	p, i = removeSubtag(p, f, n, i)
+	return p[2], i
 end
 
-function lp8.remove_subtags(cfg, f)
+function lp8.remove_subtags(p, f)
+	p = toCfg(p)
 	local r = {}
-	for i = #cfg, 1, -1 do
-		if match(cfg[i], f) then
-			r[#r+1] = cfg[i]
-			tr(cfg, i)
+	for i = #p, 1, -1 do
+		if match(p[i], f) then
+			r[#r+1] = p[i]
+			tr(p, i)
 		end
 	end
 	return lp8.flip(r)
 end
 
-function lp8.remove_children(cfg, f)
+function lp8.remove_children(p, f)
+	p = toCfg(p)
 	local r = {}
-	for i = #cfg, 1, -1 do
-		if match(cfg[i], f) then
-			r[#r+1] = cfg[i][2]
-			tr(cfg, i)
+	for i = #p, 1, -1 do
+		if match(p[i], f) then
+			r[#r+1] = p[i][2]
+			tr(p, i)
 		end
 	end
 	return lp8.flip(r)
 end
 
-function lp8.erase_subtags(cfg, f)
-	for i = #cfg, 1, -1 do
-		if match(cfg[i], f) then
-			tr(cfg, i)
+function lp8.erase_subtags(p, f)
+	p = toCfg(p)
+	for i = #p, 1, -1 do
+		if match(p[i], f) then
+			tr(p, i)
 		end
 	end
 end
