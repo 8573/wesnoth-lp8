@@ -62,7 +62,7 @@ Returns whether `cfg1` and `cfg2` are structurally equal.
 
 `lp8.tags_equal(tag1, tag2)`
 -------------------------------------------------------------------------------
-Returns whether `tag1` and `tag2` are structurally equal.
+Returns whether `tag1` and `tag2` are nominally and structurally equal.
 
 
 `lp8.is_subtag(p, c)`

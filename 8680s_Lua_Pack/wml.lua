@@ -25,6 +25,10 @@ local function toCfg(x)
 	return isTag(x) and x[2] or x
 end
 
+local function toTag(cfg)
+	return {"dummy", cfg}
+end
+
 function lp8.is_subtag(p, c)
 	p = toCfg(p)
 	for i = 1, #p do
@@ -41,6 +45,14 @@ function lp8.is_child(p, c)
 			return true
 		end
 	end
+end
+
+function lp8.tags_equal(x, y)
+	return x[1] == y[1] and match(x, y) and match(y, x)
+end
+
+function lp8.cfgs_equal(x, y)
+	return lp8.tags_equal(toTag(x), toTag(y))
 end
 
 local function getSubtag(p, f, n, i)
@@ -199,10 +211,6 @@ function match(t, f)
 	return f == nil or error(ty .. "s as filters not supported", 2)
 end
 lp8.match_tag = match
-
-function lp8.tags_equal(x, y)
-	return match(x, y) and match(y, x)
-end
 
 function lp8.to_unit_cfg(u)
 	local p = lp8.is_unit_proxy(u); return p and u.__cfg
