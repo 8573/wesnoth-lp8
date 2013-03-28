@@ -24,10 +24,12 @@ lp8.is_tag = isTag
 local function toCfg(x)
 	return isTag(x) and x[2] or x
 end
+lp8.to_cfg = toCfg
 
-local function toTag(cfg)
-	return {"dummy", cfg}
+local function toTag(x, name)
+	return isTag(x) and x or {name or "dummy", x}
 end
+lp8.to_tag = toTag
 
 function lp8.is_subtag(p, c)
 	p = toCfg(p)

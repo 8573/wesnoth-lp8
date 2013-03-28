@@ -27,6 +27,17 @@ Returns whether `x` is (or at least looks like) a WML tag object (both
 userdatas and tables count).
 
 
+`lp8.to_cfg(x)`
+-------------------------------------------------------------------------------
+If `x` is a tag, returns its cfg contents. Otherwise, returns `x`.
+
+
+`lp8.to_tag(x, name)`
+-------------------------------------------------------------------------------
+If `x` is not already a tag, returns `{name, x}` (`name` defaults to "dummy").
+Otherwise, returns `x`.
+
+
 `lp8.is_unit_proxy(x)`
 -------------------------------------------------------------------------------
 Returns whether `x` is (or at least looks like) a unit proxy.
