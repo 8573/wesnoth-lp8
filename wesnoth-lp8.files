@@ -18,6 +18,7 @@ readme.md
 license
 8680s_Lua_Pack/strings.lua
 8680s_Lua_Pack/docs/strings.md
-8680s_Lua_Pack/remove_object.lua
-8680s_Lua_Pack/docs/remove_object.cfg
+8680s_Lua_Pack/unmodify.lua
+8680s_Lua_Pack/docs/unmodify.cfg
 8680s_Lua_Pack/CHANGELOG.md
+8680s_Lua_Pack/docs/unmodify.md
