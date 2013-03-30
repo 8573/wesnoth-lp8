@@ -27,9 +27,12 @@ Returns whether `x` is (or at least looks like) a WML tag object (both
 userdatas and tables count).
 
 
-`lp8.to_cfg(x)`
+`lp8.to_cfg(x, f)`
 -------------------------------------------------------------------------------
 If `x` is a tag, returns its cfg contents. Otherwise, returns `x`.
+
+If `f` is specified, an error is raised if `x` is a tag but does not match the
+filter `f` (see `match_tag` below).
 
 
 `lp8.to_tag(x, name)`
