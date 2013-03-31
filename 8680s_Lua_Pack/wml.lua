@@ -22,7 +22,7 @@ end
 lp8.is_tag = isTag
 
 local function toCfg(x, f)
-	return isTag(x) and (match(x) and x[2] or error(
+	return isTag(x) and (match(x, f) and x[2] or error(
 		("expected tag input to match filter %q"): format(tostring(f)))) or x
 end
 lp8.to_cfg = toCfg
