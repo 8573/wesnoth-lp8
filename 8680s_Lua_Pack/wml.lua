@@ -11,13 +11,13 @@ end
 lp8.is_cfg = isCfg
 
 local function isTag(x)
-	if type(x) ~= 'userdata' and type(x) ~= 'table' then
+	if not lp8.tblorudt(x) then
 		return false
 	end
 	local s, c = pcall(function()
 		return #x == 2 and type(x[1]) == 'string' and x[2]
 	end)
-	return s and c and (type(c) == 'table' or type(c) == 'userdata')
+	return s and c and lp8.tblorudt(c)
 end
 lp8.is_tag = isTag
 
@@ -217,7 +217,7 @@ lp8.match_tag = match
 
 function lp8.to_unit_cfg(u)
 	local p = lp8.is_unit_proxy(u); return p and u.__cfg
-		or (type(u) == 'table' or type(u) == 'userdata') and u or error(
+		or lp8.tblorudt(u) and u or error(
 			("expected unit proxy or unit cfg; received %s with metatable %q"):
 				format(type(u), tostring(getmetatable(u)))), p
 end

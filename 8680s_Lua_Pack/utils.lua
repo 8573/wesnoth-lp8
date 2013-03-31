@@ -14,6 +14,10 @@ function lp8.nyiw(f)
 	h.wml_error("Not yet implemented: " .. f)
 end
 
+function lp8.tblorudt(x)
+	return type(x) == 'table' or type(x) == 'userdata'
+end
+
 function lp8.load(ld, env, name)
 	if not loadstring then
 		return load(ld, name, nil, env)
