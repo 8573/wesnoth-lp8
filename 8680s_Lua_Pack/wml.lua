@@ -3,7 +3,7 @@
 
 lp8.require "utils"
 
-local type, match = type
+local type, flip, match = type, lp8.flip
 
 local function isCfg(x)
 	return getmetatable(x) == 'wml object'
@@ -88,12 +88,12 @@ function lp8.children(p, f, i)
 	end, {i = i or 1}
 end
 
-function lp8.get_subtags(p, f)
+function lp8.get_subtags(p, f, b)
 	local r = {}
 	for t in lp8.subtags(p, f) do
 		r[#r+1] = t
 	end
-	return r
+	return b and flip(r) or r
 end
 
 function lp8.get_child(p, f, n, i)
@@ -101,12 +101,12 @@ function lp8.get_child(p, f, n, i)
 	return p[2], i
 end
 
-function lp8.get_children(p, f)
+function lp8.get_children(p, f, b)
 	local r = {}
 	for c in lp8.children(p, f) do
 		r[#r+1] = c
 	end
-	return r
+	return b and flip(r) or r
 end
 
 local tr = table.remove
@@ -132,7 +132,7 @@ function lp8.remove_child(p, f, n, i)
 	return p[2], i
 end
 
-function lp8.remove_subtags(p, f)
+function lp8.remove_subtags(p, f, b)
 	p = toCfg(p)
 	local r = {}
 	for i = #p, 1, -1 do
@@ -142,10 +142,10 @@ function lp8.remove_subtags(p, f)
 			i = i-1
 		end
 	end
-	return lp8.flip(r)
+	return b and r or flip(r)
 end
 
-function lp8.remove_children(p, f)
+function lp8.remove_children(p, f, b)
 	p = toCfg(p)
 	local r = {}
 	for i = #p, 1, -1 do
@@ -155,7 +155,7 @@ function lp8.remove_children(p, f)
 			i = i-1
 		end
 	end
-	return lp8.flip(r)
+	return b and r or flip(r)
 end
 
 function lp8.erase_subtags(p, f)
@@ -206,7 +206,7 @@ function match(t, f)
 			error "expected Boolean operation constant as first element of tag filter list"
 		end
 		for i = 2, #f do
-			if lp8.flip(match(t, f[i]), ty ~= lp8.OR) then
+			if flip(match(t, f[i]), ty ~= lp8.OR) then
 				return ty == lp8.OR
 			end
 		end

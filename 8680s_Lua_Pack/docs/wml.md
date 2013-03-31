@@ -100,14 +100,19 @@ Returns the contents (like `helper.get_child`) of the `index`-th matching
 subtag of the tag or cfg `p`.
 
 
-`lp8.get_subtags(p, filter)`
+`lp8.get_subtags(p, filter, flip)`
 -------------------------------------------------------------------------------
 Returns a list containing each matching subtag of the tag or cfg `p`.
 
+If `flip` is truthy, the order of the subtags in the returned list is opposite
+from their original order in `p`.
 
-`lp8.get_children(p, filter)`
+
+`lp8.get_children(p, filter, flip)`
 -------------------------------------------------------------------------------
 Returns a list containing the contents of each matching subtag of tag/cfg `p`.
+
+`flip` works like in `get_subtags`.
 
 
 `lp8.subtags(p, filter)`
@@ -132,16 +137,20 @@ Removes the `index`-th matching subtag of the tag or cfg `p`.
 Returns the contents of the removed subtag.
 
 
-`lp8.remove_subtags(p, filter)`
+`lp8.remove_subtags(p, filter, flip)`
 -------------------------------------------------------------------------------
 Removes each matching subtag of the tag or cfg `p`.
 Returns a list containing each removed subtag.
 
+`flip` works the same as in `get_subtags`.
 
-`lp8.remove_children(p, filter)`
+
+`lp8.remove_children(p, filter, flip)`
 -------------------------------------------------------------------------------
 Removes each matching subtag of the tag or cfg `p`.
 Returns a list containing the contents of each removed subtag.
+
+`flip` works like in `get_subtags`.
 
 
 `lp8.erase_subtags(p, filter)`
