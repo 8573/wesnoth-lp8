@@ -139,6 +139,7 @@ function lp8.remove_subtags(p, f)
 		if match(p[i], f) then
 			r[#r+1] = p[i]
 			tr(p, i)
+			i = i-1
 		end
 	end
 	return lp8.flip(r)
@@ -151,6 +152,7 @@ function lp8.remove_children(p, f)
 		if match(p[i], f) then
 			r[#r+1] = p[i][2]
 			tr(p, i)
+			i = i-1
 		end
 	end
 	return lp8.flip(r)
@@ -161,6 +163,7 @@ function lp8.erase_subtags(p, f)
 	for i = #p, 1, -1 do
 		if match(p[i], f) then
 			tr(p, i)
+			i = i-1
 		end
 	end
 end
