@@ -8,7 +8,7 @@ if not namespace_of_8680s_Lua_Pack then
 	lp8.helper = wesnoth.require "lua/helper.lua"
 	function lp8.require(script)
 		assert(lp8 == namespace_of_8680s_Lua_Pack)
-		wesnoth.require("~add-ons/8680s_Lua_Pack/" .. script .. ".lua")
+		wesnoth.require(dir_of_8680s_Lua_Pack .. script .. ".lua")
 	end
 end
 
