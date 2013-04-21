@@ -3,7 +3,7 @@
 
 lp8.require "utils"
 
-local type, flip, match = type, lp8.flip
+local type, flip, et, match = type, lp8.flip, {}
 
 local function isCfg(x)
 	return getmetatable(x) == 'wml object'
@@ -84,7 +84,7 @@ function lp8.children(p, f, i)
 	return function(s)
 		local c, i = getSubtag(p, f, 1, s.i)
 		s.i = i
-		return c[2], i
+		return (c or et)[2], i
 	end, {i = i or 1}
 end
 
@@ -98,7 +98,7 @@ end
 
 function lp8.get_child(p, f, n, i)
 	p, i = getSubtag(p, f, n, i)
-	return p[2], i
+	return (p or et)[2], i
 end
 
 function lp8.get_children(p, f, b)
@@ -129,7 +129,7 @@ lp8.remove_subtag = removeSubtag
 
 function lp8.remove_child(p, f, n, i)
 	p, i = removeSubtag(p, f, n, i)
-	return p[2], i
+	return (p or et)[2], i
 end
 
 function lp8.remove_subtags(p, f, b)
@@ -224,3 +224,4 @@ function lp8.to_unit_cfg(u)
 			("expected unit proxy or unit cfg; received %s with metatable %q"):
 				format(type(u), tostring(getmetatable(u)))), p
 end
+
