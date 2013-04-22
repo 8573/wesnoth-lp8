@@ -74,18 +74,18 @@ lp8.get_subtag = getSubtag
 
 function lp8.subtags(p, f, i)
 	return function(s)
-		local t, i = getSubtag(p, f, 1, s.i)
+		local t, i = getSubtag(p, f, 1, s.i + 1)
 		s.i = i
 		return t, i
-	end, {i = i or 1}
+	end, {i = i or 0}
 end
 
 function lp8.children(p, f, i)
 	return function(s)
-		local c, i = getSubtag(p, f, 1, s.i)
+		local c, i = getSubtag(p, f, 1, s.i + 1)
 		s.i = i
 		return (c or et)[2], i
-	end, {i = i or 1}
+	end, {i = i or 0}
 end
 
 function lp8.get_subtags(p, f, b)
