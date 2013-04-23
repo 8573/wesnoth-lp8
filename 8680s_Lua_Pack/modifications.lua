@@ -79,6 +79,16 @@ function lp8.remove_object(u, obj, fxFilt, leaveHusk, failSilently)
 	end
 end
 
+function lp8.remove_objects(u, oFilt, fxFilt, leaveHusks)
+	local u, proxy = lp8.to_unit_cfg(u)
+	for o in lp8.objects(u, oFilt) do
+		lp8.remove_object(u, o, fxFilt, leaveHusks)
+	end
+	if proxy then
+		wesnoth.put_unit(u)
+	end
+end
+
 function wesnoth.wml_actions.remove_object(cfg)
 	cfg = h.parsed(cfg)
 	lp8.remove_object(wesnoth.get_units(h.get_child(cfg, "filter")),

@@ -3,7 +3,7 @@
 ===============================================================================
 * Added to modifications library:
 ** functions get_objects, get_object_tags, get_object_cfgs, objects,
-   object_tags, object_cfgs.
+   object_tags, object_cfgs, remove_objects.
 * Added to utils library:
 ** functions keys, values, ivalues.
 

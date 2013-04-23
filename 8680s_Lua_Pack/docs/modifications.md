@@ -63,3 +63,11 @@ If the object is not in the unit’s [modifications], or if the unit has no
 If all [effect]s of the object are removed, the remnants of the object will
 be deleted, unless `leave_husk` is truthy.
 
+
+`lp8.remove_objects(unit, object_filter, effect_filter, leave_husks)`
+-------------------------------------------------------------------------------
+Like `remove_object`, but removes each object matching `object_filter`.
+
+`fail_silently` is always off, because it is irrelevant, unless another thread
+is removing objects simultaneously.
+
