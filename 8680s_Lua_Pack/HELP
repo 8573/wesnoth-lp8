@@ -1,13 +1,13 @@
 
-To use 8680’s Lua Pack in your add-on, first declare it as a dependency in your
-`_server.pbl`:
+To use 8680’s Lua Pack in your add-on, first declare it as a dependency in
+your `_server.pbl`:
 
 	dependencies="8680s_Lua_Pack"
 
 (See also <http://wiki.Wesnoth.org/PblWML>.)
 
-Then put this in your `_main.cfg` (in the campaign or multiplayer `#ifdef`) for
-every script you want to use:
+Then put this in your `_main.cfg` (in the campaign or multiplayer `#ifdef`)
+for every script you want to use:
 
 	{8680/lua-pack <script-name>}
 
@@ -20,4 +20,6 @@ For example:
 
 Documentation for each script is available in the `docs` directory.
 
-Please report any problems to 8680 on the forum: <http://r.Wesnoth.org/u8680>.
+If you have any problems, go here:
+	<https://github.com/8573/wesnoth-lp8/issues>
+
