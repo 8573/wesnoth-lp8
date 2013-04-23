@@ -30,7 +30,7 @@ function lp8.remove_object(u, obj, fxFilt, leaveHusk)
 	local u, proxy, m, es = lp8.to_unit_cfg(u)
 	obj = lp8.to_cfg(obj, "object")
 	m = h.get_child(u, "modifications")
-	if not lp8.is_child(m, obj) then
+	if not m or not lp8.is_child(m, obj) then
 		error(("unit %q does not have object %q"):
 			format(ts(u.id), ts(obj.id or obj)))
 	end
