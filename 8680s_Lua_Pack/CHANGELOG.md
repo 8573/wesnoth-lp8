@@ -2,7 +2,8 @@
 0.8.1
 ===============================================================================
 * Added to modifications library:
-** functions get_objects, get_object_tags, get_object_cfgs.
+** functions get_objects, get_object_tags, get_object_cfgs, objects,
+   object_tags, object_cfgs.
 * Added to utils library:
 ** functions keys, values, ivalues.
 

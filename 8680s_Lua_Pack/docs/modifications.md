@@ -20,6 +20,22 @@ Equivalent to `lp8.get_objects(unit, filter, true)`.
 Equivalent to `lp8.get_objects(unit, filter, false)`.
 
 
+`lp8.objects(unit, filter, full_tags)`
+-------------------------------------------------------------------------------
+Returns an iterator over each entry in the list returned by
+`lp8.get_objects(unit, filter, full_tags)`.
+
+
+`lp8.object_tags(unit, filter)`
+-------------------------------------------------------------------------------
+Equivalent to `lp8.objects(unit, filter, true)`.
+
+
+`lp8.object_cfgs(unit, filter)`
+-------------------------------------------------------------------------------
+Equivalent to `lp8.objects(unit, filter, false)`.
+
+
 `lp8.remove_effect(unit, effect)`
 -------------------------------------------------------------------------------
 Removes the given `effect` (a tag or cfg) from `unit` (a cfg or proxy).

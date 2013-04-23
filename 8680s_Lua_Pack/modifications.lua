@@ -3,6 +3,7 @@
 
 lp8.require "wml"
 lp8.require "strings"
+lp8.require "utils"
 
 local h, tn, ts, fx = lp8.helper, tonumber, tostring, {}
 
@@ -23,11 +24,23 @@ end
 lp8.get_objects = getObjs
 
 function lp8.get_object_tags(u, f)
-		return getObjs(u, f, 1)
+	return getObjs(u, f, 1)
 end
 
 function lp8.get_object_cfgs(u, f)
-		return getObjs(u, f)
+	return getObjs(u, f)
+end
+
+function lp8.objects(u, f, t)
+	return lp8.values(getObjs(u, f, t))
+end
+
+function lp8.object_tags(u, f)
+	return lp8.values(getObjs(u, f, 1))
+end
+
+function lp8.object_cfgs(u, f)
+	return lp8.values(getObjs(u, f))
 end
 
 function lp8.remove_effect(u, e)
