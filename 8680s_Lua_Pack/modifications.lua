@@ -26,13 +26,17 @@ function lp8.remove_effect(u, e)
 	end
 end
 
-function lp8.remove_object(u, obj, fxFilt, leaveHusk)
+function lp8.remove_object(u, obj, fxFilt, leaveHusk, failSilently)
 	local u, proxy, m, es = lp8.to_unit_cfg(u)
 	obj = lp8.to_cfg(obj, "object")
 	m = h.get_child(u, "modifications")
 	if not m or not lp8.is_child(m, obj) then
-		error(("unit %q does not have object %q"):
-			format(ts(u.id), ts(obj.id or obj)))
+		if failSilently then
+			return
+		else
+			error(("unit %q does not have object %q"):
+				format(ts(u.id), ts(obj.id or obj)))
+		end
 	end
 	es = lp8.remove_children(obj, {lp8.AND, "effect", fxFilt}, 1)
 	for _, e in ipairs(es) do

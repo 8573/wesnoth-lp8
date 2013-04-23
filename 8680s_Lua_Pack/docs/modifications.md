@@ -14,7 +14,7 @@ and the unit advances, the effect may be reapplied if the effect tag is not
 removed first.
 
 
-`lp8.remove_object(unit, object, effect_filter, leave_husk)`
+`lp8.remove_object(unit, object, effect_filter, leave_husk, fail_silently)`
 -------------------------------------------------------------------------------
 Removes from the given `unit` (which may be a cfg or proxy) all [effect]s of
 the given `object` (a tag or cfg) that match `effect_filter` (which may be any
@@ -22,6 +22,9 @@ type of filter supported by `wml/match_tag`).
 
 The object must be a subtag or child of the unit’s [modifications] subtag; i.e.
 it must have been applied to the unit at some point.
+
+If the object is not in the unit’s [modifications], or if the unit has no
+[modifications], an error will be raised, unless `fail_silently` is truthy.
 
 If all [effect]s of the object are removed, the remnants of the object will
 be deleted, unless `leave_husk` is truthy.
