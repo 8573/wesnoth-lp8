@@ -2,6 +2,29 @@
 Miscellaneous utilities.
 ===============================================================================
 
+`lp8.keys(table, start_key)`
+-------------------------------------------------------------------------------
+Returns an iterator over each key in `table`, starting at `start_key` (which
+defaults to the “first” (see below) key in the table).
+
+The order in which the keys are traversed is undefined, as with `pairs`.
+
+
+`lp8.values(table, start_key)`
+-------------------------------------------------------------------------------
+Returns an iterator over each value in `table`, starting at the value
+associated to the key `start_key` (which defaults as in `keys` above).
+
+The order in which the values are traversed is undefined, as with `pairs`.
+
+
+`lp8.ivalues(table, start_index)`
+-------------------------------------------------------------------------------
+Returns an iterator over each value in `table` associated to an integral index,
+in ascending order, starting at `start_index` (default 1) and ending at the
+first subsequent index lacking an associated value.
+
+
 `lp8.load(ld, env, source)`
 -------------------------------------------------------------------------------
 Emulates a subset of the Lua 5.2 `load` function’s functionality in 5.2 or 5.1.

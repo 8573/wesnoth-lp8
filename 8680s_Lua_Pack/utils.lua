@@ -18,6 +18,29 @@ function lp8.tblorudt(x)
 	return type(x) == 'table' or type(x) == 'userdata'
 end
 
+function lp8.keys(t, k)
+	return function(s)
+		local k = s.k
+		s.k = next(t, k)
+		return k
+	end, {k = k or next(t)}
+end
+
+function lp8.values(t, k)
+	return function(s)
+		local v
+		v, s.k = t[s.k], next(t, s.k)
+		return v
+	end, {k = k or next(t)}
+end
+
+function lp8.ivalues(t, i)
+	return function(s)
+		s.i = s.i+1
+		return t[s.i-1]
+	end, {i = i or 1}
+end
+
 function lp8.load(ld, env, name)
 	if not loadstring then
 		return load(ld, name, nil, env)
