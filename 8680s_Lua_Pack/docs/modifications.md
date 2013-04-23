@@ -2,6 +2,24 @@
 For manipulating [object]s and other modifications.
 ===============================================================================
 
+`lp8.get_objects(unit, filter, full_tags)`
+-------------------------------------------------------------------------------
+Returns a list of the contents of each [object] tag in the `unit`’s
+[modifications] that matches `filter`.
+
+If `full_tags` is truthy, returns the tags, rather than only their contents.
+
+
+`lp8.get_object_tags(unit, filter)`
+-------------------------------------------------------------------------------
+Equivalent to `lp8.get_objects(unit, filter, true)`.
+
+
+`lp8.get_object_cfgs(unit, filter)`
+-------------------------------------------------------------------------------
+Equivalent to `lp8.get_objects(unit, filter, false)`.
+
+
 `lp8.remove_effect(unit, effect)`
 -------------------------------------------------------------------------------
 Removes the given `effect` (a tag or cfg) from `unit` (a cfg or proxy).

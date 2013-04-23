@@ -1,4 +1,9 @@
 
+0.8.1
+===============================================================================
+* Added to modifications library:
+** functions get_objects, get_object_tags, get_object_cfgs.
+
 0.8.0
 ===============================================================================
 * Added modifications library, with:

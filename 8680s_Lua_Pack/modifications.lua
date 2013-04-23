@@ -14,6 +14,22 @@ local function adjn(t, k, v, r)
 	t[k] = p and v*(r and 1/(x*.01+1) or x*.01+1) or r and v-x or v+x
 end
 
+function getObjs(u, f, t)
+	local u, m = lp8.to_unit_cfg(u)
+	m = h.get_child(u, "modifications")
+	return m and (t and lp8.get_children or lp8.get_subtags)
+		(m, {lp8.AND, "object", f})
+end
+lp8.get_objects = getObjs
+
+function lp8.get_object_tags(u, f)
+		return getObjs(u, f, 1)
+end
+
+function lp8.get_object_cfgs(u, f)
+		return getObjs(u, f)
+end
+
 function lp8.remove_effect(u, e)
 	e = lp8.to_cfg(e, "effect")
 	local t, u, proxy = e.apply_to, lp8.to_unit_cfg(u)
