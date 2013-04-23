@@ -92,7 +92,8 @@ end
 function wesnoth.wml_actions.remove_object(cfg)
 	cfg = h.parsed(cfg)
 	local of, ef =
-		h.get_child(cfg, "filter_wml"), h.get_child(cfg, "filter_effect")
+		lp8.get_subtag(cfg, "filter_wml"),
+		lp8.get_subtag(cfg, "filter_effect")
 	for _, u in pairs(wesnoth.get_units(h.get_child(cfg, "filter"))) do
 		lp8.remove_objects(u, of, ef, cfg.leave_husks)
 	end
