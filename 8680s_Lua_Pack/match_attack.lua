@@ -3,7 +3,8 @@
 
 lp8.require "strings"
 
-local h, tn = lp8.helper, tonumber
+local h, tn, rk = lp8.helper, tonumber,
+	{ name = 1, damage = 1, range = 1, type = 1, special = 1 }
 
 local function hasDamage(attack, damages)
 	local d = tn(attack.damage)
@@ -45,10 +46,9 @@ local function matchAttack(attack, filter, tagName)
 				end
 			elseif k == "special" and not hasSpecial(attack, v)
 					or k == "damage" and not hasDamage(attack, v)
-					or (k == "name" or k == "range" or k == "type")
-						and attack[k] ~= v then
+					or rk[k] and attack[k] ~= v then
 				return false
-			else
+			elseif not rk[k] then
 				h.wml_error(("Unrecognized key: [%s]%s="):
 					format(tagName or "filter_attack", k))
 			end
