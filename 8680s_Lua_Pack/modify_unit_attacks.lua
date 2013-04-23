@@ -16,7 +16,7 @@ local ts, h, stringAttackKeys, numericAttackKeys =
 function wesnoth.wml_actions.modify_unit_attacks(cfg)
 	local units, attackFilter =
 		wesnoth.get_units(h.get_child(cfg, "filter")),
-		h.get_child(cfg, "filter_attack")
+		h.parsed(h.get_child(cfg, "filter_attack"))
 	for i = 1, #units do
 		local u, modifiedAttacks = units[i].__cfg, {}
 		-- Compute modifications.
