@@ -3,7 +3,7 @@
 
 lp8.require "utils"
 
-local type, flip, et, match = type, lp8.flip, {}
+local type, flip, at, et, match = type, lp8.flip, {lp8.AND}, {}
 
 local function isCfg(x)
 	return getmetatable(x) == 'wml object'
@@ -188,13 +188,12 @@ function match(t, f)
 				return false
 			end
 		end
-		local n, i = {}, {}
+		local i = {}
 		for k, v in ipairs(f) do
 			if isTag(v) then
-				k = v[1]; v, i[k] = getSubtag(t, {lp8.AND, k, v}, n[k], i[k])
-				if v then
-					n[k] = (n[k] or 1) + 1
-				else
+				k = v[1]; at[2], at[3] = k, v
+				v, i[k] = getSubtag(t, at, 1, i[k])
+				if not v then
 					return false
 				end
 			end
