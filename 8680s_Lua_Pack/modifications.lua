@@ -5,7 +5,8 @@ lp8.require "wml"
 lp8.require "strings"
 lp8.require "utils"
 
-local h, tn, ts, fx = lp8.helper, tonumber, tostring, {}
+local h, tn, ts, et, at, fx =
+	lp8.helper, tonumber, tostring, {}, {lp8.AND}, {}
 
 local function adjn(t, k, v, r)
 	v = lp8.tblorudt(v) and v.increase or v
@@ -18,8 +19,8 @@ end
 function getObjs(u, f, t)
 	local u, m = lp8.to_unit_cfg(u)
 	m = h.get_child(u, "modifications")
-	return m and (t and lp8.get_children or lp8.get_subtags)
-		(m, {lp8.AND, "object", f})
+	at[2] = "object"; at[3] = f
+	return m and (t and lp8.get_children or lp8.get_subtags)(m, at)
 end
 lp8.get_objects = getObjs
 
@@ -67,7 +68,8 @@ function lp8.remove_object(u, obj, fxFilt, leaveHusk, failSilently)
 				format(ts(u.id), ts(obj.id or obj)))
 		end
 	end
-	es = lp8.remove_children(obj, {lp8.AND, "effect", fxFilt}, 1)
+	at[2] = "effect"; at[3] = fxFilt
+	es = lp8.remove_children(obj, at, 1)
 	for _, e in ipairs(es) do
 		lp8.remove_effect(u, e)
 	end
@@ -114,3 +116,15 @@ end
 function fx.max_experience(u,e,r)
 	adjn(u, "max_experience", e, r)
 end
+function fx.new_ability(u,e,r)
+	u = h.get_child(u, 'abilities')
+	for a in lp8.subtags(h.get_child(e, 'abilities') or et) do
+		if r then
+			at[2] = a[1]; at[3] = a
+			lp8.erase_subtags(u, at)
+		else
+			u[#u+1] = a
+		end
+	end
+end
+
