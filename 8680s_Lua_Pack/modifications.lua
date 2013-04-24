@@ -12,7 +12,7 @@ local function adjn(t, k, v, r)
 	local s, x, p = ts(v or '0'): match('^%s*([%-%+]?)%s*(%d+)%s*(%%?)%s*$')
 	x, v = (s or error(("invalid %s effect value %q"): format(k, ts(v)), 2))
 		~= '-' and tn(x) or -tn(x), t[k]
-	t[k] = p and v*(r and 1/(x*.01+1) or x*.01+1) or r and v-x or v+x
+	t[k] = p == '%' and v*(r and 1/(x*.01+1) or x*.01+1) or r and v-x or v+x
 end
 
 function getObjs(u, f, t)
