@@ -104,6 +104,8 @@ subtag of the tag or cfg `p`.
 -------------------------------------------------------------------------------
 Returns a list containing each matching subtag of the tag or cfg `p`.
 
+If no matching subtags are found, the returned table is empty.
+
 If `flip` is truthy, the order of the subtags in the returned list is opposite
 from their original order in `p`.
 
@@ -111,6 +113,8 @@ from their original order in `p`.
 `lp8.get_children(p, filter, flip)`
 -------------------------------------------------------------------------------
 Returns a list containing the contents of each matching subtag of tag/cfg `p`.
+
+If no matching subtags are found, the returned table is empty.
 
 `flip` works like in `get_subtags`.
 
