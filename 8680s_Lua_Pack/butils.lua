@@ -1,5 +1,9 @@
 
 -- By 8680.
+-- Utilities that do not use type.lua.
+-- As far as other add-ons should be concerned, this is part of utils.lua.
+-- This is separate from utils.lua so that type.lua can depend on this even
+--  if utils.lua depends on type.lua.
 
 local type, next, load, loadstring, setfenv =
 	type, next, load, loadstring, setfenv
