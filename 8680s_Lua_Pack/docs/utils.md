@@ -56,6 +56,18 @@ Flips `x` however makes sense.
 If `control` is false (but not nil), `x` is not flipped but returned as is.
 
 
+`lp8.dbgstr(x)`
+-------------------------------------------------------------------------------
+Returns `tostring(x)`, prefixed with the type of `x` (a standard Lua type, or
+a userdata type).
+
+The returned string is generally in the format “type: value”, but some
+userdata types may use a different format.
+
+`nil` is returned as simply “nil”, because the string representations of its
+type and its value are the same.
+
+
 `lp8.wml_vars`
 -------------------------------------------------------------------------------
 A WML variables interface table, as created by `helper.set_wml_var_metatable`.
