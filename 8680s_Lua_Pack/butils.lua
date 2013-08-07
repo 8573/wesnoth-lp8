@@ -80,4 +80,6 @@ function lp8.flip(x, b)
 	error("don’t know how to flip a " .. ty)
 end
 
-lp8.wml_vars = h.set_wml_var_metatable {}
+if wesnoth then
+	lp8.wml_vars = h.set_wml_var_metatable {}
+end
