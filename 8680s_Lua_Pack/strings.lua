@@ -26,5 +26,6 @@ function lp8.subst(s)
 end
 
 function lp8.interp(s, e)
-	return ts(s): gsub("%?%b{}", function(x) return eval(x: sub(2, -1), e) end)
+	return ts(s): gsub("%?%b{}",
+		function(x) return ts(eval(x: sub(2, -1), e)) end)
 end
