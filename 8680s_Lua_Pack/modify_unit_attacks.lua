@@ -3,7 +3,7 @@
 -- for $this_attack).
 
 lp8.require "utils"
-lp8.require "strings"
+lp8.require "string"
 lp8.require "match_attack"
 
 local ts, h, stringAttackKeys, numericAttackKeys =

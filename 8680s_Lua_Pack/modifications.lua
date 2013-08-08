@@ -2,7 +2,7 @@
 -- By 8680.
 
 lp8.require "wml"
-lp8.require "strings"
+lp8.require "string"
 lp8.require "utils"
 
 local h, tn, ts, et, at, fx =

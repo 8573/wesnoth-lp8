@@ -1,7 +1,7 @@
 
 -- By 8680.
 
-lp8.require "strings"
+lp8.require "string"
 
 local h, tn, rk = lp8.helper, tonumber,
 	{ name = 1, damage = 1, range = 1, type = 1, special = 1 }
