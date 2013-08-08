@@ -7,6 +7,8 @@ lp8.require "utils"
 lp8.require "string"
 lp8.require "match_attack"
 
+lp8.newLib 'modify_unit_attacks'
+
 local ts, h, stringAttackKeys, numericAttackKeys =
 	tostring, lp8.helper
 	{	name = true, description = true, range = true, type = true,
@@ -64,3 +66,4 @@ function wesnoth.wml_actions.modify_unit_attacks(cfg)
 	end
 end
 
+return lp8.export()
