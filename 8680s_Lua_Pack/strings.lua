@@ -16,7 +16,7 @@ end
 
 local function eval(s, e, err)
 	s = ts(s)
-	return (lp8.load("return " .. s) or type(err) == 'function'
+	return (lp8.load("return " .. s, e) or type(err) == 'function'
 		and err(s) or error(("can’t eval %q"): format(s)))()
 end
 lp8.eval = eval
