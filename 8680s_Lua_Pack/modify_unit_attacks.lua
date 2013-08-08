@@ -1,6 +1,7 @@
 
--- By 8680, with help from battlestar (testing) and Elvish_Hunter (suggestion
--- for $this_attack).
+-- By 8680, with help from battlestar (testing), Elvish_Hunter (suggestion for
+-- $this_attack), pydsigner (filed GitHub issue #2, which was fixed in commit
+-- aa8113bbe0509dadf985910f4c1225d1ba00779e).
 
 lp8.require "utils"
 lp8.require "string"

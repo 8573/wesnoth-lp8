@@ -1,5 +1,6 @@
 
--- By 8680.
+-- By 8680, with help from pydsigner (filed GitHub issue #1, which was fixed
+-- in commit 7b94e0f54e03d2598de95241216c6eba5bcb25e0).
 
 lp8.require "string"
 
