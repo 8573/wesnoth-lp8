@@ -20,7 +20,7 @@ function getObjs(u, f, t)
 	local u, m = lp8.to_unit_cfg(u)
 	m = h.get_child(u, "modifications")
 	at[2] = "object"; at[3] = f
-	return m and (t and lp8.get_children or lp8.get_subtags)(m, at)
+	return m and (t and lp8.get_subtags or lp8.get_children)(m, at)
 end
 lp8.get_objects = getObjs
 
