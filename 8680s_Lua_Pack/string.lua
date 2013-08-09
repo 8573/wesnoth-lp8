@@ -4,6 +4,8 @@
 lp8.require "utils"
 
 local ts = tostring
+local vcfg = wesnoth.tovconfig
+local load = lp8.load
 
 function lp8.trim(s)
 	-- trim5 from [http://Lua-Users.org/wiki/StringTrim].
@@ -16,13 +18,13 @@ end
 
 local function eval(s, e, err)
 	s = ts(s)
-	return (lp8.load("return " .. s, e) or type(err) == 'function'
+	return (load("return " .. s, e) or type(err) == 'function'
 		and err(s) or error(("can’t eval %q"): format(s)))()
 end
 lp8.eval = eval
 
 function lp8.subst(s)
-	return wesnoth.tovconfig {s = ts(s)}.s
+	return vcfg {s = ts(s)}.s
 end
 
 function lp8.interp(s, e)

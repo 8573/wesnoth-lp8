@@ -1,6 +1,8 @@
 
 -- By 8680.
 
+local type, next, load, loadstring, setfenv =
+	type, next, load, loadstring, setfenv
 local h = lp8.helper
 
 lp8.AND = {}

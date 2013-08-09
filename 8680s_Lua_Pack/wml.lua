@@ -3,7 +3,10 @@
 
 lp8.require "utils"
 
-local type, flip, at, et, match = type, lp8.flip, {lp8.AND}, {}
+local type, getmetatable, pcall, pairs, ipairs =
+	type, getmetatable, pcall, pairs, ipairs
+local flip, tblorudt = lp8.flip, lp8.tblorudt
+local at, et, match = {lp8.AND}, {}
 
 local function isCfg(x)
 	return getmetatable(x) == 'wml object'
@@ -11,13 +14,13 @@ end
 lp8.is_cfg = isCfg
 
 local function isTag(x)
-	if not lp8.tblorudt(x) then
+	if not tblorudt(x) then
 		return false
 	end
 	local s, c = pcall(function()
 		return #x == 2 and type(x[1]) == 'string' and x[2]
 	end)
-	return s and c and lp8.tblorudt(c)
+	return s and c and tblorudt(c)
 end
 lp8.is_tag = isTag
 
@@ -219,7 +222,7 @@ lp8.match_tag = match
 
 function lp8.to_unit_cfg(u)
 	local p = lp8.is_unit_proxy(u); return p and u.__cfg
-		or lp8.tblorudt(u) and u or error(
+		or tblorudt(u) and u or error(
 			("expected unit proxy or unit cfg; received %s with metatable %q"):
 				format(type(u), tostring(getmetatable(u)))), p
 end
