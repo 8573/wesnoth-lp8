@@ -3,31 +3,39 @@
 
 lp8.require "utils"
 
+lp8.newLib 'string'
+
 local ts = tostring
 local vcfg = wesnoth.tovconfig
 local load = lp8.load
 
-function lp8.trim(s)
+local function trim(s)
 	-- trim5 from [http://Lua-Users.org/wiki/StringTrim].
 	return ts(s): match "^%s*(.*%S)" or ""
 end
+lp8.export(trim, 'trim')
 
-function lp8.gtrim(s)
+local function gtrim(s)
 	return ts(s): gsub("%s+", "")
 end
+lp8.export(gtrim, 'gtrim')
 
 local function eval(s, e, err)
 	s = ts(s)
 	return (load("return " .. s, e) or type(err) == 'function'
 		and err(s) or error(("can’t eval %q"): format(s)))()
 end
-lp8.eval = eval
+lp8.export(eval, 'eval')
 
-function lp8.subst(s)
+local function subst(s)
 	return vcfg {s = ts(s)}.s
 end
+lp8.export(subst, 'subst')
 
-function lp8.interp(s, e)
+local function interp(s, e)
 	return ts(s): gsub("%?%b{}",
 		function(x) return ts(eval(x: sub(2, -1), e)) end)
 end
+lp8.export(interp, 'interp')
+
+return lp8.export()

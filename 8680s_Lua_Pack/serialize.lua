@@ -1,6 +1,8 @@
 
 -- By 8680.
 
+lp8.newLib 'serialize'
+
 local load = loadstring or load
 
 local function serialize(x, t)
@@ -38,7 +40,7 @@ local function serialize(x, t)
 		error("serializing " .. ty .. "s not supported")
 	end
 end
-lp8.serialize = serialize
+lp8.export(serialize, 'serialize')
 
 local function deserialize(x)
 	local ty = x.sub(1,1)
@@ -63,5 +65,6 @@ local function deserialize(x)
 		error(("unrecognized data type code %q"): format(ty))
 	end
 end
-lp8.deserialize = deserialize
+lp8.export(deserialize, 'deserialize')
 
+return lp8.export()

@@ -4,6 +4,8 @@
 
 lp8.require "string"
 
+lp8.newLib 'match_attack'
+
 local type, tn, tostring, pairs = type, tonumber, tostring, pairs
 local h, gtrim = lp8.helper, lp8.gtrim
 local rk = { name = 1, damage = 1, range = 1, type = 1, special = 1 }
@@ -19,7 +21,7 @@ local function hasDamage(attack, damages)
 		end
 	end
 end
-lp8.match_attack_damage = hasDamage
+lp8.export(hasDamage, 'match_attack_damage')
 
 local function hasSpecial(attack, special)
 	local specials = h.get_child(attack, "specials")
@@ -30,7 +32,7 @@ local function hasSpecial(attack, special)
 	end
 	return false
 end
-lp8.match_attack_special = hasSpecial
+lp8.export(hasSpecial, 'match_attack_special')
 
 local function matchAttack(attack, filter, tagName)
 	if filter then
@@ -58,5 +60,6 @@ local function matchAttack(attack, filter, tagName)
 	end
 	return true
 end
-lp8.match_attack = matchAttack
+lp8.export(matchAttack, 'match_attack')
 
+return lp8.export()

@@ -5,6 +5,8 @@ lp8.require "wml"
 lp8.require "string"
 lp8.require "utils"
 
+lp8.newLib 'modifications'
+
 local h, tn, ts, et, at, fx =
 	lp8.helper, tonumber, tostring, {}, {lp8.AND}, {}
 
@@ -16,35 +18,40 @@ local function adjn(t, k, v, r)
 	t[k] = p == '%' and v*(r and 1/(x*.01+1) or x*.01+1) or r and v-x or v+x
 end
 
-function getObjs(u, f, t)
+local function getObjs(u, f, t)
 	local u, m = lp8.to_unit_cfg(u)
 	m = h.get_child(u, "modifications")
 	at[2] = "object"; at[3] = f
 	return m and (t and lp8.get_subtags or lp8.get_children)(m, at)
 end
-lp8.get_objects = getObjs
+lp8.export(getObjs, 'get_objects')
 
-function lp8.get_object_tags(u, f)
+local function getObjectTags(u, f)
 	return getObjs(u, f, 1)
 end
+lp8.export(getObjectTags, 'get_object_tags')
 
-function lp8.get_object_cfgs(u, f)
+local function getObjectCfgs(u, f)
 	return getObjs(u, f)
 end
+lp8.export(getObjectCfgs, 'get_object_cfgs')
 
-function lp8.objects(u, f, t)
+local function objects(u, f, t)
 	return lp8.values(getObjs(u, f, t))
 end
+lp8.export(objects, 'objects')
 
-function lp8.object_tags(u, f)
+local function objectTags(u, f)
 	return lp8.values(getObjs(u, f, 1))
 end
+lp8.export(objectTags, 'object_tags')
 
-function lp8.object_cfgs(u, f)
+local function objectCfgs(u, f)
 	return lp8.values(getObjs(u, f))
 end
+lp8.export(objectCfgs, 'object_cfgs')
 
-function lp8.remove_effect(u, e)
+local function removeEffect(u, e)
 	e = lp8.to_cfg(e, "effect")
 	local t, u, proxy = e.apply_to, lp8.to_unit_cfg(u)
 	for i = 1, tn(e.times == 'per level' and u.level or e.times) or 1 do
@@ -55,8 +62,9 @@ function lp8.remove_effect(u, e)
 		wesnoth.put_unit(u)
 	end
 end
+lp8.export(removeEffect, 'remove_effect')
 
-function lp8.remove_object(u, obj, fxFilt, leaveHusk, failSilently)
+local function removeObject(u, obj, fxFilt, leaveHusk, failSilently)
 	local u, proxy, m, es = lp8.to_unit_cfg(u)
 	obj = lp8.to_cfg(obj, "object")
 	m = h.get_child(u, "modifications")
@@ -71,7 +79,7 @@ function lp8.remove_object(u, obj, fxFilt, leaveHusk, failSilently)
 	at[2] = "effect"; at[3] = fxFilt
 	es = lp8.remove_children(obj, at, 1)
 	for _, e in ipairs(es) do
-		lp8.remove_effect(u, e)
+		removeEffect(u, e)
 	end
 	if not (h.get_child(obj, "effect") or leaveHusk) then
 		lp8.remove_subtag(m, function(t) return t[2] == obj end)
@@ -80,16 +88,18 @@ function lp8.remove_object(u, obj, fxFilt, leaveHusk, failSilently)
 		wesnoth.put_unit(u)
 	end
 end
+lp8.export(removeObject, 'remove_object')
 
-function lp8.remove_objects(u, oFilt, fxFilt, leaveHusks)
+local function removeObjects(u, oFilt, fxFilt, leaveHusks)
 	local u, proxy = lp8.to_unit_cfg(u)
-	for o in lp8.objects(u, oFilt) do
-		lp8.remove_object(u, o, fxFilt, leaveHusks)
+	for o in objects(u, oFilt) do
+		removeObject(u, o, fxFilt, leaveHusks)
 	end
 	if proxy then
 		wesnoth.put_unit(u)
 	end
 end
+lp8.export(removeObjects, 'remove_objects')
 
 function wesnoth.wml_actions.remove_object(cfg)
 	cfg = h.parsed(cfg)
@@ -97,11 +107,11 @@ function wesnoth.wml_actions.remove_object(cfg)
 		lp8.get_subtag(cfg, "filter_wml"),
 		lp8.get_subtag(cfg, "filter_effect")
 	for _, u in pairs(wesnoth.get_units(h.get_child(cfg, "filter"))) do
-		lp8.remove_objects(u, of, ef, cfg.leave_husks)
+		removeObjects(u, of, ef, cfg.leave_husks)
 	end
 end
 
-lp8.effect_handlers = fx
+lp8.export(fx, 'effect_handlers')
 
 function fx.hitpoints(u,e,r)
 	adjn(u, "hitpoints", e, r)
@@ -128,3 +138,4 @@ function fx.new_ability(u,e,r)
 	end
 end
 
+return lp8.export()
