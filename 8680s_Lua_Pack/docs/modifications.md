@@ -48,11 +48,19 @@ and the unit advances, the effect may be reapplied if the effect tag is not
 removed first.
 
 
-`lp8.remove_object(unit, object, effect_filter, leave_husk, fail_silently)`
+`lp8.remove_object(unit, object, effects, leave_husk, fail_silently)`
 -------------------------------------------------------------------------------
-Removes from the given `unit` (which may be a cfg or proxy) all [effect]s of
-the given `object` (a tag or cfg) that match `effect_filter` (which may be any
-type of filter supported by `wml/match_tag`).
+If `effects` is not a string, this function removes from the given `unit`
+(which may be a cfg or proxy) all [effect]s of the given `object` (a tag or
+cfg) that match `effects` (which may be any type of filter supported by
+`wml/match_tag`, except a string).
+
+If `effects` is the string `"skip"`, this function will not bother undoing the
+object’s [effect]s, but will instead only remove the [object] tag from the
+unit’s [modifications] subtag. If `effects` is `"skip"` and `leave_husk` is
+truthy, an error will be raised.
+
+If `effects` is any other string, an error will be raised.
 
 The object must be a subtag or child of the unit’s [modifications] subtag; i.e.
 it must have been applied to the unit at some point.
@@ -64,7 +72,7 @@ If all [effect]s of the object are removed, the remnants of the object will
 be deleted, unless `leave_husk` is truthy.
 
 
-`lp8.remove_objects(unit, object_filter, effect_filter, leave_husks)`
+`lp8.remove_objects(unit, object_filter, effects, leave_husks)`
 -------------------------------------------------------------------------------
 Like `remove_object`, but removes each object matching `object_filter`.
 

@@ -64,7 +64,14 @@ local function removeEffect(u, e)
 end
 lp8.export(removeEffect, 'remove_effect')
 
-local function removeObject(u, obj, fxFilt, leaveHusk, failSilently)
+local function removeObject(u, obj, fx, leaveHusk, failSilently)
+	if type(fx) == 'string' and fx ~= 'skip' then
+		error(("`effects` is an unrecognized string: %q"): format(fx))
+	end
+	if fx == 'skip' and leaveHusk then
+		error(("`effects` is %q but `leave_husk` is %s"):
+			format(fx, lp8.dbgstr(leaveHusk)))
+	end
 	local u, proxy, m, es = lp8.to_unit_cfg(u)
 	obj = lp8.to_cfg(obj, "object")
 	m = h.get_child(u, "modifications")
@@ -76,12 +83,14 @@ local function removeObject(u, obj, fxFilt, leaveHusk, failSilently)
 				format(ts(u.id), ts(obj.id or obj)))
 		end
 	end
-	at[2] = "effect"; at[3] = fxFilt
-	es = lp8.remove_children(obj, at, 1)
-	for _, e in ipairs(es) do
-		removeEffect(u, e)
+	if fx ~= 'skip' then
+		at[2] = "effect"; at[3] = fxFilt
+		es = lp8.remove_children(obj, at, 1)
+		for _, e in ipairs(es) do
+			removeEffect(u, e)
+		end
 	end
-	if not (h.get_child(obj, "effect") or leaveHusk) then
+	if fx == 'skip' or not (h.get_child(obj, "effect") or leaveHusk) then
 		lp8.remove_subtag(m, function(t) return t[2] == obj end)
 	end
 	if proxy then
@@ -90,10 +99,10 @@ local function removeObject(u, obj, fxFilt, leaveHusk, failSilently)
 end
 lp8.export(removeObject, 'remove_object')
 
-local function removeObjects(u, oFilt, fxFilt, leaveHusks)
+local function removeObjects(u, oFilt, fx, leaveHusks)
 	local u, proxy = lp8.to_unit_cfg(u)
 	for o in objects(u, oFilt) do
-		removeObject(u, o, fxFilt, leaveHusks)
+		removeObject(u, o, fx, leaveHusks)
 	end
 	if proxy then
 		wesnoth.put_unit(u)
@@ -103,9 +112,21 @@ lp8.export(removeObjects, 'remove_objects')
 
 function wesnoth.wml_actions.remove_object(cfg)
 	cfg = h.parsed(cfg)
-	local of, ef =
+	local of, ef, skipfx =
 		lp8.get_subtag(cfg, "filter_wml"),
-		lp8.get_subtag(cfg, "filter_effect")
+		lp8.get_subtag(cfg, "filter_effect"),
+		cfg.skip_effects
+	if skipfx then
+		if skipfx ~= true then
+			h.wml_error(("[remove_object]: skip_effects= has unrecognized value %q"):
+				format(skipfx))
+		end
+		if ef then
+			h.wml_error "[remove_object] may not have both [filter_effect] and skip_effects=yes"
+		else
+			ef = 'skip'
+		end
+	end
 	for _, u in pairs(wesnoth.get_units(h.get_child(cfg, "filter"))) do
 		removeObjects(u, of, ef, cfg.leave_husks)
 	end
