@@ -127,7 +127,8 @@ function wesnoth.wml_actions.remove_object(cfg)
 			ef = 'skip'
 		end
 	end
-	for _, u in pairs(wesnoth.get_units(h.get_child(cfg, "filter"))) do
+	for _, u in pairs(wesnoth.get_units(h.get_child(cfg, "filter") or
+			h.wml_error "[remove_object] missing required [filter] subtag")) do
 		removeObjects(u, of, ef, cfg.leave_husks)
 	end
 end
