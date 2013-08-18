@@ -132,9 +132,7 @@ local function removeSubtag(p, f, n, i)
 		if match(p[i], f) then
 			n = n-1
 			if n <= 0 then
-				local t = p[i]
-				tr(p, i)
-				return t, i
+				return tr(p, i), i
 			end
 		end
 	end
@@ -152,8 +150,7 @@ local function removeSubtags(p, f, b)
 	local r = {}
 	for i = #p, 1, -1 do
 		if match(p[i], f) then
-			r[#r+1] = p[i]
-			tr(p, i)
+			r[#r+1] = tr(p, i)
 			i = i-1
 		end
 	end
@@ -166,8 +163,7 @@ local function removeChildren(p, f, b)
 	local r = {}
 	for i = #p, 1, -1 do
 		if match(p[i], f) then
-			r[#r+1] = p[i][2]
-			tr(p, i)
+			r[#r+1] = tr(p, i)
 			i = i-1
 		end
 	end
