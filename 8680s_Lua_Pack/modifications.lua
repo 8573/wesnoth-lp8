@@ -4,11 +4,14 @@
 lp8.require "wml"
 lp8.require "string"
 lp8.require "utils"
+lp8.require 'math'
 
 lp8.newLib 'modifications'
 
 local h, tn, ts, et, at, fx =
 	lp8.helper, tonumber, tostring, {}, {lp8.AND}, {}
+local abs, clamp =
+	math.abs, lp8.clamp
 
 local function adjn(t, k, v, r)
 	v = lp8.tblorudt(v) and v.increase or v
@@ -16,6 +19,36 @@ local function adjn(t, k, v, r)
 	x, v = (s or error(("invalid %s effect value %q"): format(k, ts(v)), 2))
 		~= '-' and tn(x) or -tn(x), t[k]
 	t[k] = p == '%' and v*(r and 1/(x*.01+1) or x*.01+1) or r and v-x or v+x
+end
+local function adjTerrainCosts(u, k, e, r)
+	local MIN, MAX = 1, 99
+	local replace = e.replace
+	if r and replace then
+		error(("cannot remove %s effect with replace=yes"):
+			format(k), 2)
+	end
+	u = assert(h.get_child(u, k))
+	e = h.get_child(e, k)
+	if not e then
+		return
+	end
+	if r then
+		for k, v in e do
+			-- Can’t handle the case where the original adjustment
+			-- was clamped, because that information is lost.
+			local new = tn(u[k]) or MAX
+			v = clamp(abs(new) - (tn(v) or 0), MIN, MAX)
+			u[k] = new >= 0 and v or -v
+		end
+	elseif replace then
+		lp8.merge_attributes(u, e)
+	else
+		for k, v in e do
+			local old = tn(u[k]) or MAX
+			v = clamp(abs(old) + (tn(v) or 0), MIN, MAX)
+			u[k] = old >= 0 and v or -v
+		end
+	end
 end
 
 local function getObjs(u, f, t)
@@ -147,6 +180,15 @@ function fx.experience(u,e,r)
 end
 function fx.max_experience(u,e,r)
 	adjn(u, "max_experience", e, r)
+end
+function fx.movement_costs(u,e,r)
+	adjTerrainCosts(u, 'movement_costs', e, r)
+end
+function fx.vision_costs(u,e,r)
+	adjTerrainCosts(u, 'vision_costs', e, r)
+end
+function fx.jamming_costs(u,e,r)
+	adjTerrainCosts(u, 'jamming_costs', e, r)
 end
 function fx.new_ability(u,e,r)
 	u = h.get_child(u, 'abilities')
