@@ -182,6 +182,21 @@ local function eraseSubtags(p, f)
 end
 lp8.export(eraseSubtags, 'erase_subtags')
 
+local function mergeAttributes(targetCfg, sourceCfg)
+	assert(targetCfg != sourceCfg)
+	for k, v in sourceCfg do
+		if type(k) == 'string' then
+			if k:sub(1, 7) == 'add_to_' then
+				k = k:sub(8)
+				targetCfg[k] = tonumber(targetCfg[k]) + tonumber(v)
+			else
+				targetCfg[k] = v
+			end
+		end
+	end
+end
+lp8.export(mergeAttributes, 'merge_attributes')
+
 local function isUnitProxy(x)
 	return getmetatable(x) == 'unit'
 end
