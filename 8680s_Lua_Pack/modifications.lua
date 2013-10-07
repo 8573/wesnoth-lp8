@@ -219,6 +219,11 @@ function fx.resistance(u,e,r)
 		end
 	end
 end
+function fx.defense(u,e,r)
+	-- I’m not sure that using adjTerrainCosts() for defense values is
+	-- entirely correct.
+	adjTerrainCosts(u, 'defense', e, r)
+end
 function fx.new_ability(u,e,r)
 	u = h.get_child(u, 'abilities')
 	for a in lp8.subtags(h.get_child(e, 'abilities') or et) do
