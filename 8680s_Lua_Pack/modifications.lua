@@ -10,8 +10,8 @@ lp8.newLib 'modifications'
 
 local h, tn, ts, et, at, fx =
 	lp8.helper, tonumber, tostring, {}, {lp8.AND}, {}
-local abs, clamp =
-	math.abs, lp8.clamp
+local abs, greater, clamp =
+	math.abs, math.max, lp8.clamp
 
 local function adjn(t, k, v, r)
 	v = lp8.tblorudt(v) and v.increase or v
@@ -189,6 +189,35 @@ function fx.vision_costs(u,e,r)
 end
 function fx.jamming_costs(u,e,r)
 	adjTerrainCosts(u, 'jamming_costs', e, r)
+end
+function fx.resistance(u,e,r)
+	local MIN, MAX = 0, 100
+	local replace = e.replace
+	u = assert(h.get_child(u, 'resistance'))
+	e = h.get_child(u, 'resistance')
+	if not e then
+		return
+	end
+	if r then
+		if replace then
+			error("cannot remove resistance effect with replace=yes")
+		end
+		for k, v in e do
+			-- Like adjTerrainCosts(), does not handle the case of
+			-- the value having been clamped originally.
+			u[k] = clamp((tn(u[k]) or MAX) - (tn(v) or MIN),
+				MIN, MAX)
+		end
+	else
+		if replace then
+			lp8.merge_attributes(u, e)
+		else
+			for k, v in e do
+				u[k] = greater(MIN,
+					(tn(u[k]) or MAX) + (tn(v) or MIN))
+			end
+		end
+	end
 end
 function fx.new_ability(u,e,r)
 	u = h.get_child(u, 'abilities')
