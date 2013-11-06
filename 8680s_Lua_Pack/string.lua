@@ -10,7 +10,7 @@ local vcfg = wesnoth.tovconfig
 local load = lp8.load
 
 local function trim(s)
-	-- trim5 from [http://Lua-Users.org/wiki/StringTrim].
+	-- trim5 from <http://Lua-Users.org/wiki/StringTrim>.
 	return ts(s): match "^%s*(.*%S)" or ""
 end
 lp8.export(trim, 'trim')
