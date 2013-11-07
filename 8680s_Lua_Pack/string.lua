@@ -6,7 +6,7 @@ lp8.require "utils"
 lp8.newLib 'string'
 
 local ts = tostring
-local vcfg = wesnoth.tovconfig
+local vcfg = type(wesnoth) == 'table' and wesnoth.tovconfig or nil
 local load = lp8.load
 
 local function trim(s)
