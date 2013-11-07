@@ -56,3 +56,9 @@ Converts a string to a number like the C standard library function `strtod`.
 
 Functions like `tonumber`, and additionally understands (case-insensitively)
 the keywords `Infinity` (or `Inf`) and `NaN` (Not-a-Number).
+
+
+`lp8.parse_wml_boolean(string)`
+-------------------------------------------------------------------------------
+Parses a WML Boolean value from `string`. Returns true if `string` is `yes` or
+`true`; returns false if `string` is `no` or `false`; returns nil otherwise.

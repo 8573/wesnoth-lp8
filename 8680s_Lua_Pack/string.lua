@@ -58,4 +58,14 @@ local function strtod(s)
 end
 lp8.export(strtod, 'strtod')
 
+local function parseWMLBoolean(s)
+	s = ts(s)
+	if s == 'yes' or s == 'true' then
+		return true
+	elseif s == 'no' or s == 'false' then
+		return false
+	end
+end
+lp8.export(parseWMLBoolean, 'parse_wml_boolean')
+
 return lp8.export()
