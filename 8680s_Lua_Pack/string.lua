@@ -5,7 +5,7 @@ lp8.require "utils"
 
 lp8.newLib 'string'
 
-local ts = tostring
+local tn, ts = tonumber, tostring
 local vcfg = type(wesnoth) == 'table' and wesnoth.tovconfig or nil
 local load = lp8.load
 
@@ -37,5 +37,25 @@ local function interp(s, e)
 		function(x) return ts(eval(x: sub(2, -1), e)) end)
 end
 lp8.export(interp, 'interp')
+
+local function strtod(s)
+	s = trim(s)
+	local sign = s:sub(1,1)
+	if sign == '-' or sign == '+' then
+		s = s:sub(2)
+		sign = sign == '-' and -1 or 1
+	else
+		sign = 1
+	end
+	s = s:upper()
+	if s == 'INF' or s == 'INFINITY' then
+		return (1/0) * sign
+	elseif s == 'NAN' or s:match 'NAN%(%w*%)' then
+		return 0/0
+	end
+	s = tn(s)
+	return s and s * sign or s
+end
+lp8.export(strtod, 'strtod')
 
 return lp8.export()

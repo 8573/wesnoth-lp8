@@ -45,3 +45,10 @@ Returns a copy of `string` with (e.g.) "?{3+5}" replaced with "8".
 `env` is the environment in which to evaluate the expressions; it defaults to
 the global environment.
 
+
+`lp8.strtod(string)`
+-------------------------------------------------------------------------------
+Converts a string to a number like the C standard library function `strtod`.
+
+Functions like `tonumber`, and additionally understands (case-insensitively)
+the keywords `Infinity` (or `Inf`) and `NaN` (Not-a-Number).
