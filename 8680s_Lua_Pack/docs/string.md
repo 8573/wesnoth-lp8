@@ -2,6 +2,10 @@
 String manipulation utilities.
 ===============================================================================
 
+All functions in this library that have a `string` parameter pass that
+parameter through `tostring` before processing it.
+
+
 `lp8.trim(string)`
 -------------------------------------------------------------------------------
 Returns a copy of `string` with leading and trailing whitespace removed.
