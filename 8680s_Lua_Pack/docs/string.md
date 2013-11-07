@@ -58,6 +58,16 @@ Functions like `tonumber`, and additionally understands (case-insensitively)
 the keywords `Infinity` (or `Inf`) and `NaN` (Not-a-Number).
 
 
+`lp8.parse_wml_value(string)`
+-------------------------------------------------------------------------------
+Parses a WML value from `string`, generally like the Wesnoth engine would.
+
+Returns a Boolean if `string` is a WML Boolean keyword (see
+`parse_wml_boolean`); returns a number if `string` is a valid number (including
+infinity and NaN; see `strtod`) and can be converted to a number without loss
+of information; returns the original string otherwise.
+
+
 `lp8.parse_wml_boolean(string)`
 -------------------------------------------------------------------------------
 Parses a WML Boolean value from `string`. Returns true if `string` is `yes` or

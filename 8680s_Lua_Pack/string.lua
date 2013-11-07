@@ -68,4 +68,20 @@ local function parseWMLBoolean(s)
 end
 lp8.export(parseWMLBoolean, 'parse_wml_boolean')
 
+local function parseWMLValue(s)
+	s = ts(s)
+	local v = parseWMLBoolean(s)
+	if v ~= nil then
+		return v
+	end
+	v = strtod(s)
+	if v and (ts(v):lower() == s:lower() or v == 1/0) then
+		-- `or v == 1/0` — An input of `infinity` would re-stringify
+		-- to `inf`, but I permit that because no information is lost.
+		return v
+	end
+	return s
+end
+lp8.export(parseWMLValue, 'parse_wml_value')
+
 return lp8.export()
