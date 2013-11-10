@@ -2,6 +2,11 @@
 Miscellaneous utilities.
 ===============================================================================
 
+`lp8.to_boolean(x)`
+-------------------------------------------------------------------------------
+If `x` is nil or false, returns false; otherwise, returns true.
+
+
 `lp8.keys(table, start_key)`
 -------------------------------------------------------------------------------
 Returns an iterator over each key in `table`, starting at `start_key` (which

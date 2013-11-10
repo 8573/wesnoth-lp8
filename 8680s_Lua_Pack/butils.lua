@@ -26,6 +26,15 @@ function lp8.tblorudt(x)
 	return type(x) == 'table' or type(x) == 'userdata'
 end
 
+local function toBoolean(x)
+	if x then
+		return true
+	else
+		return false
+	end
+end
+lp8.export(toBoolean, 'to_boolean')
+
 local function keys(t, k)
 	return function(s)
 		local k = s.k
