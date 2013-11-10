@@ -79,3 +79,10 @@ Parses a WML Boolean value from `string`. Returns true if `string` is `yes` or
 Returns `string`, with each occurrence of `^`, `$`, `(`, `)`, `%`, `.`, `[`,
 `]`, `*`, `+`, `-`, or `?` in it escaped by prefixing it with `%`, such that
 the returned string is suitable for use in a pattern for `string.match` etc.
+
+
+`lp8.is_identifier(string)`
+-------------------------------------------------------------------------------
+Returns whether `string` is a valid C-style identifier (note: Lua uses C-style
+identifiers), that is, whether it consists solely of one or more US-ASCII
+alphanumeric characters and/or underscores, of which the first is not a digit.

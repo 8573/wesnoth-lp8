@@ -5,7 +5,7 @@ lp8.require "utils"
 
 lp8.newLib 'string'
 
-local tn, ts = tonumber, tostring
+local tn, ts, tb = tonumber, tostring, lp8.to_boolean
 local vcfg = type(wesnoth) == 'table' and wesnoth.tovconfig or nil
 local load = lp8.load
 
@@ -88,5 +88,10 @@ local function patternEscape(s)
 	return ts(s):gsub('([%^%$%(%)%%%.%[%]%*%+%-%?])', '%%%1')
 end
 lp8.export(patternEscape, 'pattern_escape')
+
+local function isIdentifier(s)
+	return tb(ts(s):match '^[%a_][%w_]*$')
+end
+lp8.export(isIdentifier, 'is_identifier')
 
 return lp8.export()
