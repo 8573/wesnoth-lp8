@@ -84,4 +84,9 @@ local function parseWMLValue(s)
 end
 lp8.export(parseWMLValue, 'parse_wml_value')
 
+local function patternEscape(s)
+	return ts(s):gsub('([%^%$%(%)%%%.%[%]%*%+%-%?])', '%%%1')
+end
+lp8.export(patternEscape, 'pattern_escape')
+
 return lp8.export()

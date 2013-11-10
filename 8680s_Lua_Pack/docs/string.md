@@ -72,3 +72,10 @@ of information; returns the original string otherwise.
 -------------------------------------------------------------------------------
 Parses a WML Boolean value from `string`. Returns true if `string` is `yes` or
 `true`; returns false if `string` is `no` or `false`; returns nil otherwise.
+
+
+`lp8.pattern_escape(string)`
+-------------------------------------------------------------------------------
+Returns `string`, with each occurrence of `^`, `$`, `(`, `)`, `%`, `.`, `[`,
+`]`, `*`, `+`, `-`, or `?` in it escaped by prefixing it with `%`, such that
+the returned string is suitable for use in a pattern for `string.match` etc.
