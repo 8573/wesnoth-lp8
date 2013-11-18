@@ -183,7 +183,7 @@ end
 lp8.export(eraseSubtags, 'erase_subtags')
 
 local function mergeAttributes(targetCfg, sourceCfg)
-	assert(targetCfg != sourceCfg)
+	assert(targetCfg ~= sourceCfg)
 	for k, v in sourceCfg do
 		if type(k) == 'string' then
 			if k:sub(1, 7) == 'add_to_' then
