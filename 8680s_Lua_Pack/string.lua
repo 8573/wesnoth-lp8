@@ -28,6 +28,8 @@ local function eval(s, e, err)
 	else
 		if type(err) == 'function' then
 			err(s)
+		elseif type(err) == 'string' then
+			error(err)
 		else
 			error(("can’t eval %q"):format(s))
 		end

@@ -27,9 +27,13 @@ Evaluates `string` as a Lua expression.
 `env` is the environment in which to evaluate the expression; it defaults to
 the global environment.
 
-`err` is an optional function to be called with `string` as an argument in the
-event of an error; it defaults to issuing a generic error message: `can’t eval
-<string>`.
+If `string` fails to compile (e.g., due to a syntax error), this function
+will…
+
+* call `err(string)`, if `err` is a function; or
+* raise an error with `err` as the message, if `err` is a string; or
+* issue a generic error message, `can’t eval <string>`, if `err` is none of
+  the above.
 
 
 `lp8.subst(string)`
