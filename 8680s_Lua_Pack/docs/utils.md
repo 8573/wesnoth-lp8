@@ -2,6 +2,12 @@
 Miscellaneous utilities.
 ===============================================================================
 
+`lp8.idem(...)`
+-------------------------------------------------------------------------------
+Takes any quantity of arguments, and returns them all untouched. More useful
+than it might sound.
+
+
 `lp8.to_boolean(x)`
 -------------------------------------------------------------------------------
 If `x` is nil or false, returns false; otherwise, returns true.

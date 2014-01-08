@@ -14,6 +14,11 @@ local h = lp8.helper
 lp8.export({}, 'AND')
 lp8.export({}, 'OR')
 
+local function idem(...)
+	return ...
+end
+lp8.export(idem, 'idem')
+
 function lp8.nyil(f)
 	error("Not yet implemented: " .. f, 2)
 end
