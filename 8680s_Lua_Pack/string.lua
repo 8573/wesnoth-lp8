@@ -22,8 +22,16 @@ lp8.export(gtrim, 'gtrim')
 
 local function eval(s, e, err)
 	s = ts(s)
-	return (load("return " .. s, e) or type(err) == 'function'
-		and err(s) or error(("can’t eval %q"): format(s)))()
+	local f = load('return ' .. s, e)
+	if f then
+		return f()
+	else
+		if type(err) == 'function' then
+			err(s)
+		else
+			error(("can’t eval %q"):format(s))
+		end
+	end
 end
 lp8.export(eval, 'eval')
 
