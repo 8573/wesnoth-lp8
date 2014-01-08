@@ -67,7 +67,7 @@ end
 lp8.export(ivalues, 'ivalues')
 
 local function lp8load(ld, env, name)
-	if not loadstring then
+	if not setfenv then
 		return load(ld, name, nil, env)
 	else
 		ld = (type(ld) == 'string' and loadstring or
