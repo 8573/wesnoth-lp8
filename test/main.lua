@@ -8,5 +8,6 @@ assert(_VERSION:match '^Lua 5%.[12]$')
 dir_of_8680s_Lua_Pack = '../8680s_Lua_Pack/'
 dofile '../8680s_Lua_Pack/load.lua'
 
+dofile 'string.lua'
 
 -- vim: tabstop=4:
