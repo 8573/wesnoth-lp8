@@ -5,6 +5,11 @@ lp8.require 'butils'
 
 lp8.newLib 'table'
 
+local function newTable()
+	return {}
+end
+lp8.export(newTable, 'new', 'new_table')
+
 local function copyTable(table, target, noOverwrite)
 	if type(table) ~= 'table' then
 		error("copyTable(table, target, noOverwrite): expected argument `table` to be a table, but it is a " .. lp8.dbgstr(table))

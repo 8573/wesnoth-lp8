@@ -2,6 +2,12 @@
 Table utilities library.
 ===============================================================================
 
+`lp8.new_table()`
+-------------------------------------------------------------------------------
+Returns a new empty table. Could be used, e.g., in WML to avoid using curly
+braces, those being special to the preprocessor.
+
+
 `lp8.copyTable(table, target, noOverwrite)`
 -------------------------------------------------------------------------------
 Copies the key-value pairs of table `table` to table `target`.
