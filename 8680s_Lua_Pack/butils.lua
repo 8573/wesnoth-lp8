@@ -40,6 +40,8 @@ local function dbgstr(x, typeof)
 	if ty == 'table' or ty == 'function' or ty == 'userdata'
 			or x == nil then
 		return tostring(x)
+	elseif ty == 'string' then
+		return ("string: %q"):format(x)
 	else
 		return tostring(ty) .. ': ' .. tostring(x)
 	end
