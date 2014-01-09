@@ -30,10 +30,11 @@ the global environment.
 If `string` fails to compile (e.g., due to a syntax error), this function
 will…
 
-* call `err(string)`, if `err` is a function; or
+* call `err(string, reason)`, if `err` is a function, where `reason` is the
+  reason that `string` failed to compile; or
 * raise an error with `err` as the message, if `err` is a string; or
-* issue a generic error message, `can’t eval <string>`, if `err` is none of
-  the above.
+* issue a generic error message, `can’t eval <string> — <reason>`, if `err` is
+  none of the above.
 
 
 `lp8.subst(string)`

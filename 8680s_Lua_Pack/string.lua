@@ -22,16 +22,19 @@ lp8.export(gtrim, 'gtrim')
 
 local function eval(s, e, err)
 	s = ts(s)
-	local f = load('return ' .. s, e)
+	local fs = 'return ' .. s
+	local f, ce = load(fs, e)
 	if f then
 		return f()
 	else
 		if type(err) == 'function' then
-			err(s)
+			err(s, ce)
 		elseif type(err) == 'string' then
 			error(err)
 		else
-			error(("can’t eval %q"):format(s))
+			error(("can’t compile %q — %s"):format(s, ce:gsub(
+				('^%%[string %q%%]:(%%d+): (.+)$'):format(fs),
+				'%2 (line %1)')))
 		end
 	end
 end
