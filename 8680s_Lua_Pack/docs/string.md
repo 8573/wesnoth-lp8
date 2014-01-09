@@ -20,7 +20,7 @@ Returns a copy of `string` with all whitespace removed.
 E.g., `lp8.gtrim " 8680’s Lua Pack  "` returns `"8680’sLuaPack"`.
 
 
-`lp8.eval(string, env, err)`
+`lp8.eval(string, env, compile_err, run_err)`
 -------------------------------------------------------------------------------
 Evaluates `string` as a Lua expression.
 
@@ -30,11 +30,20 @@ the global environment.
 If `string` fails to compile (e.g., due to a syntax error), this function
 will…
 
-* call `err(string, reason)`, if `err` is a function, where `reason` is the
-  reason that `string` failed to compile; or
-* raise an error with `err` as the message, if `err` is a string; or
-* issue a generic error message, `can’t eval <string> — <reason>`, if `err` is
-  none of the above.
+* call `compile_err(string, reason)`, if `compile_err` is a function, where
+  `reason` is the reason that `string` failed to compile; or
+* raise an error with `compile_err` as the message, if `compile_err` is a
+  string; or
+* issue a generic error message, `can’t eval <string> — <reason>`, if
+  `compile_err` is none of the above.
+
+If the compiled `string` raises an error while running, this function will…
+
+* call `run_err(string, message)`, if `run_err` is a function, where `message`
+  is the error message raised by running `string`; or
+* raise an error with `run_err` as the message, if `run_err` is a string; or
+* allow the raised error to propagate normally up the call stack, if `run_err`
+  is nil.
 
 
 `lp8.subst(string)`

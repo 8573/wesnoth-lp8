@@ -6,6 +6,7 @@ lp8.require "utils"
 lp8.newLib 'string'
 
 local tn, ts, tb = tonumber, tostring, lp8.to_boolean
+local tblrm, unpack = table.remove, table.unpack or unpack
 local vcfg = type(wesnoth) == 'table' and wesnoth.tovconfig or nil
 local load = lp8.load
 
@@ -20,17 +21,29 @@ local function gtrim(s)
 end
 lp8.export(gtrim, 'gtrim')
 
-local function eval(s, e, err)
+local function eval(s, e, cerr, rerr)
 	s = ts(s)
 	local fs = 'return ' .. s
 	local f, ce = load(fs, e)
 	if f then
-		return f()
+		if rerr == nil then
+			return f()
+		end
+		local r = {pcall(f)}
+		if r[1] then
+			tblrm(r, 1)
+			return unpack(r)
+		end
+		if type(rerr) == 'function' then
+			rerr(s, r[2])
+		elseif type(rerr) == 'string' then
+			error(rerr)
+		end
 	else
-		if type(err) == 'function' then
-			err(s, ce)
+		if type(cerr) == 'function' then
+			cerr(s, ce)
 		elseif type(err) == 'string' then
-			error(err)
+			error(cerr)
 		else
 			error(("can’t compile %q — %s"):format(s, ce:gsub(
 				('^%%[string %q%%]:(%%d+): (.+)$'):format(fs),
