@@ -7,16 +7,10 @@ lp8.require 'type'
 lp8.reopenLib 'utils'
 
 local type, tostring = type, tostring
-local typeof = lp8.Type.of
+local bdbgstr, typeof = lp8.dbgstr, lp8.Type.of
 
 local function dbgstr(x)
-	local ty = typeof(x) or type(x)
-	if ty == 'table' or ty == 'function' or ty == 'userdata'
-			or x == nil then
-		return tostring(x)
-	else
-		return tostring(ty) .. ': ' .. tostring(x)
-	end
+	return bdbgstr(x, typeof)
 end
 lp8.export(dbgstr, 'dbgstr')
 

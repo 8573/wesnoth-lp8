@@ -35,6 +35,17 @@ function lp8.tblorudt(x)
 	return type(x) == 'table' or type(x) == 'userdata'
 end
 
+local function dbgstr(x, typeof)
+	local ty = typeof and typeof(x) or type(x)
+	if ty == 'table' or ty == 'function' or ty == 'userdata'
+			or x == nil then
+		return tostring(x)
+	else
+		return tostring(ty) .. ': ' .. tostring(x)
+	end
+end
+lp8.export(dbgstr, 'dbgstr')
+
 local function toBoolean(x)
 	if x then
 		return true
