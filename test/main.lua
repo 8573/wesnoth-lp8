@@ -9,5 +9,6 @@ dir_of_8680s_Lua_Pack = '../8680s_Lua_Pack/'
 dofile '../8680s_Lua_Pack/load.lua'
 
 dofile 'string.lua'
+dofile 'type.lua'
 
 -- vim: tabstop=4:
