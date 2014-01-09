@@ -70,11 +70,15 @@ local function lp8load(ld, env, name)
 	if not setfenv then
 		return load(ld, name, nil, env)
 	else
-		ld = (type(ld) == 'string' and loadstring or
+		local ld, e = (type(ld) == 'string' and loadstring or
 			type(ld) == 'function' and load or
 			error("expected string or function as first argument; received "
 				.. ty))(ld, name)
-		return ld and setfenv(ld, env)
+		if ld then
+			return setfenv(ld, env)
+		else
+			return nil, e
+		end
 	end
 end
 lp8.export(lp8load, 'load')

@@ -53,6 +53,9 @@ environment.
 
 `source` is an optional name for whatever’s being loaded, for error reporting.
 
+If `ld` cannot be compiled (e.g., due to a syntax error), returns two values:
+`nil` and an error message.
+
 
 `lp8.flip(x, control)`
 -------------------------------------------------------------------------------
