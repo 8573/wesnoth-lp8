@@ -16,7 +16,7 @@ do
 	local r, m = pcall(eval, '!')
 	assert(r == false)
 	assert(m:match [[^%.%./8680s_Lua_Pack/string%.lua:%d+: can’t compile "!" — unexpected symbol near '!' %(line 1%)$]])
-	assert(eval('!', nil, lp8.idem) == nil)
+	assert(eval('!', nil, lp8.noop) == nil)
 end
 
 assert(strtod '12345' == 12345)
