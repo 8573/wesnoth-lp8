@@ -2,6 +2,11 @@
 Miscellaneous utilities.
 ===============================================================================
 
+`lp8.noop()`
+-------------------------------------------------------------------------------
+Does nothing. More useful than it might sound.
+
+
 `lp8.idem(...)`
 -------------------------------------------------------------------------------
 Takes any quantity of arguments, and returns them all untouched. More useful

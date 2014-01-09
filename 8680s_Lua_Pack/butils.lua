@@ -14,6 +14,10 @@ local h = lp8.helper
 lp8.export({}, 'AND')
 lp8.export({}, 'OR')
 
+local function noop()
+end
+lp8.export(noop, 'noop')
+
 local function idem(...)
 	return ...
 end
