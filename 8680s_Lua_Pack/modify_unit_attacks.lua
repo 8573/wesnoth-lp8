@@ -16,48 +16,55 @@ local ts, h, stringAttackKeys, numericAttackKeys =
 	{	damage = true, number = true, movement_used = true,
 		attack_weight = true, defense_weight = true }
 
+local function computeAttrDiff(key, oldval, newval)
+	local function attrErr(msg)
+		h.wml_error(("%s: [modify_unit_attacks]%s=%q"):format(
+			msg or "Invalid expression", ts(key), ts(oldval)))
+	end
+	if stringAttackKeys[key] then
+		return newval
+	elseif numericAttackKeys[key] then
+		return h.round(tonumber(newval)
+			or tonumber(lp8.eval(newval, nil, attrErr))
+			or attrErr())
+	elseif lp8.tblorudt(oldval) then
+		local t = oldval[1]
+		if t == "specials" then
+			lp8.nyiw "[modify_unit_attacks][specials]"
+		elseif t ~= "filter" and t ~= "filter_attack" then
+			h.wml_error(
+				"Unrecognized subtag: [modify_unit_attacks]["
+					.. ts(t) .. "]")
+		end
+	else
+		attrErr "Unrecognized key"
+	end
+end
+
+local function computeDiff(original, changes)
+	local diff = {}
+	for k, v in pairs(changes) do
+		diff[k] = computeAttrDiff(k, v,
+			lp8.subst(v):gsub("%?", ts(original[k])))
+	end
+	return diff
+end
+
 function wesnoth.wml_actions.modify_unit_attacks(cfg)
 	local units, attackFilter =
 		wesnoth.get_units(h.get_child(cfg, "filter")),
 		h.parsed(h.get_child(cfg, "filter_attack"))
 	for i = 1, #units do
-		local u, modifiedAttacks = units[i].__cfg, {}
+		local u, diffs = units[i].__cfg, {}
 		-- Compute modifications.
 		for atk in h.child_range(u, "attack") do
 			if lp8.matchAttack(atk, attackFilter) then
-				modifiedAttacks[atk] = {}
-				for k, v in pairs(cfg) do
-					local function exprErr()
-						h.wml_error(
-							("Invalid expression: [modify_unit_attacks]%s=%q"):
-								format(k, ts(v)))
-					end
-					wesnoth.set_variable("this_attack", atk)
-					local x = lp8.subst(v): gsub("%?", ts(atk[k]))
-					if stringAttackKeys[k] then
-						modifiedAttacks[atk][k] = x
-					elseif numericAttackKeys[k] then
-						modifiedAttacks[atk][k] = h.round(
-							tonumber(x) or tonumber(lp8.eval(x, nil, exprErr))
-							or exprErr())
-					elseif type(v) == "table" or type(v) == "userdata" then
-						local t = v[1]
-						if t == "specials" then
-							lp8.nyiw "[modify_unit_attacks][specials]"
-						elseif t ~= "filter" and t ~= "filter_attack" then
-							h.wml_error(
-								"Unrecognized subtag: [modify_unit_attacks]["
-								.. ts(t) .. "]")
-						end
-					else
-						h.wml_error("Unrecognized key: [modify_unit_attacks]"
-							.. ts(k) .. "=")
-					end
-				end
+				wesnoth.set_variable("this_attack", atk)
+				diffs[atk] = computeDiff(atk, cfg)
 			end
 		end
 		-- Commit changes.
-		for atk, atkcfg in pairs(modifiedAttacks) do
+		for atk, atkcfg in pairs(diffs) do
 			for k, v in pairs(atkcfg) do
 				atk[k] = v
 			end
