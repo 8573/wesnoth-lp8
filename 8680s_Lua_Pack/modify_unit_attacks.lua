@@ -10,11 +10,11 @@ lp8.require "match_attack"
 lp8.newLib 'modify_unit_attacks'
 
 local ts, h, stringAttackKeys, numericAttackKeys =
-	tostring, lp8.helper
+	tostring, lp8.helper,
 	{	name = true, description = true, range = true, type = true,
 		icon = true	},
 	{	damage = true, number = true, movement_used = true,
-		attack_weight = true, defense_weight = true },
+		attack_weight = true, defense_weight = true }
 
 function wesnoth.wml_actions.modify_unit_attacks(cfg)
 	local units, attackFilter =
