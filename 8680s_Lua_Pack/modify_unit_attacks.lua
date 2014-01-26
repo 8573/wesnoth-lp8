@@ -25,7 +25,7 @@ local function computeAttrDiff(key, oldval, newval)
 		return newval
 	elseif numericAttackKeys[key] then
 		return h.round(tonumber(newval)
-			or tonumber(lp8.eval(newval, nil, attrErr))
+			or tonumber(lp8.eval(newval, nil, attrErr, attrErr))
 			or attrErr())
 	elseif lp8.tblorudt(oldval) then
 		local t = oldval[1]
