@@ -35,13 +35,13 @@ local function eval(s, e, cerr, rerr)
 			return unpack(r)
 		end
 		if type(rerr) == 'function' then
-			rerr(s, r[2])
+			rerr(r[2], s)
 		elseif type(rerr) == 'string' then
 			error(rerr)
 		end
 	else
 		if type(cerr) == 'function' then
-			cerr(s, ce)
+			cerr(ce, s)
 		elseif type(err) == 'string' then
 			error(cerr)
 		else

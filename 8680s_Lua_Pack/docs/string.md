@@ -30,7 +30,7 @@ the global environment.
 If `string` fails to compile (e.g., due to a syntax error), this function
 will…
 
-* call `compile_err(string, reason)`, if `compile_err` is a function, where
+* call `compile_err(reason, string)`, if `compile_err` is a function, where
   `reason` is the reason that `string` failed to compile; or
 * raise an error with `compile_err` as the message, if `compile_err` is a
   string; or
@@ -39,7 +39,7 @@ will…
 
 If the compiled `string` raises an error while running, this function will…
 
-* call `run_err(string, message)`, if `run_err` is a function, where `message`
+* call `run_err(message, string)`, if `run_err` is a function, where `message`
   is the error message raised by running `string`; or
 * raise an error with `run_err` as the message, if `run_err` is a string; or
 * allow the raised error to propagate normally up the call stack, if `run_err`
