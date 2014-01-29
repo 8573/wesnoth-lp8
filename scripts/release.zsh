@@ -21,31 +21,31 @@ The add-ons server to release to must be specified as:
    where N is a number and x is a literal letter ‘x’; or
  * the word ‘trunk’, denoting the “trunk” version of Wesnoth; or
  * a port number."
-	return 2
+	exit 2
 fi
 
 if [[ ! -e $1 ]]; then
 	echo "‘$1’ does not exist.\nRelease aborted."
-	return 2
+	exit 2
 fi
 if [[ ! -d $1 ]]; then
 	echo "‘$1’ is not a directory.\nRelease aborted."
-	return 2
+	exit 2
 fi
 typeset pbl="$1/_server.pbl"
 if [[ ! -e $pbl ]]; then
 	echo "‘$pbl’ does not exist.\nRelease aborted."
-	return 2
+	exit 2
 fi
 if [[ ! -f $pbl ]]; then
 	echo "‘$pbl’ does not exist or is not a regular file.\nRelease aborted."
-	return 2
+	exit 2
 fi
 
 typeset addon=${1##*/}
 if [[ -z $addon ]]; then
 	echo "The add-on’s path ($1) may not have a slash at the end.\nRelease aborted."
-	return 2
+	exit 2
 fi
 
 if [[ -z $3 ]]; then
@@ -56,19 +56,19 @@ if [[ -z $3 ]]; then
 fi
 if [[ ! -e $3 ]]; then
 	echo "wesnoth_addon_manager directory ‘$3’ does not exist.\nRelease aborted."
-	return 2
+	exit 2
 fi
 if [[ ! -d $3 ]]; then
 	echo "wesnoth_addon_manager directory ‘$3’ is not a directory.\nRelease aborted."
-	return 2
+	exit 2
 fi
 if [[ ! -e ${3::=$3/wesnoth_addon_manager} ]]; then
 	echo "‘$3’ does not exist.\nRelease aborted."
-	return 2
+	exit 2
 fi
 if [[ ! -x ${3} ]]; then
 	echo "‘$3’ is not executable.\nRelease aborted."
-	return 2
+	exit 2
 fi
 
 ## Force use of Python version 2 for running wesnoth_addon_manager.
@@ -79,24 +79,24 @@ elif which python2.6 > /dev/null; then
 	wam=(python2.6 $3)
 else
 	echo 'Neither a `python2.7` command nor a `python2.6` command appears to be available.\nRelease aborted.'
-	return 2
+	exit 2
 fi
 
 typeset oldver=$($wam -V -p $2 -l | grep -F "$addon" | awk '{print $7}')
 if [[ $oldver != <->.<->.<-> ]]; then
 	echo "Failed to retrieve version of existing $addon release from $2 add-ons server (retrieved ‘$oldver’).\nRelease aborted."
-	return 3
+	exit 3
 fi
 
 typeset newver=$(grep -F 'version=' "$pbl" | sed -E 's/version="(.*)"/\1/')
 if [[ $newver != <->.<->.<-> ]]; then
 	echo "Failed to retrieve version of $addon to be released from ‘$pbl’ (retrieved ‘$newver’).\nRelease aborted."
-	return 4
+	exit 4
 fi
 
 if [[ $oldver = $newver ]]; then
 	echo "Version of $addon to be released equals version of $addon on $2 add-ons server (version ‘$oldver’).\nRelease aborted."
-	return 5
+	exit 5
 fi
 
 echo ----------------------------------------
@@ -115,15 +115,15 @@ if [[ $x = Y ]]; then
 	echo ----------------------------------------
 	if [[ $x = 0 ]]; then
 		echo 'Release successful.'
-		return 0
+		exit 0
 	else
 		echo 'Release failed.'
-		return 1
+		exit 1
 	fi
 elif [[ $x = n ]]; then
 	echo 'Release cancelled.'
-	return 6
+	exit 6
 else
 	echo "Expected ‘Y’ or ‘n’, got ‘$x’.\nRelease aborted."
-	return 2
+	exit 2
 fi
