@@ -57,16 +57,16 @@ function wesnoth.wml_actions.modify_unit_attacks(cfg)
 	for i = 1, #units do
 		local u, diffs = units[i].__cfg, {}
 		-- Compute modifications.
-		for atk in h.child_range(u, "attack") do
-			if lp8.matchAttack(atk, attackFilter) then
-				wesnoth.set_variable("this_attack", atk)
-				diffs[atk] = computeDiff(atk, cfg)
+		for attack in h.child_range(u, "attack") do
+			if lp8.matchAttack(attack, attackFilter) then
+				wesnoth.set_variable("this_attack", attack)
+				diffs[attack] = computeDiff(attack, cfg)
 			end
 		end
 		-- Commit changes.
-		for atk, atkcfg in pairs(diffs) do
-			for k, v in pairs(atkcfg) do
-				atk[k] = v
+		for attack, diff in pairs(diffs) do
+			for k, v in pairs(diff) do
+				attack[k] = v
 			end
 		end
 		wesnoth.put_unit(u)
