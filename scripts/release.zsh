@@ -71,7 +71,18 @@ if [[ ! -x ${3} ]]; then
 	return 2
 fi
 
-typeset oldver=$($3 -V -p $2 -l | grep -F "$addon" | awk '{print $7}')
+## Force use of Python version 2 for running wesnoth_addon_manager.
+typeset -a wam
+if which python2.7 > /dev/null; then
+	wam=(python2.7 $3)
+elif which python2.6 > /dev/null; then
+	wam=(python2.6 $3)
+else
+	echo 'Neither a `python2.7` command nor a `python2.6` command appears to be available.\nRelease aborted.'
+	return 2
+fi
+
+typeset oldver=$($wam -V -p $2 -l | grep -F "$addon" | awk '{print $7}')
 if [[ $oldver != <->.<->.<-> ]]; then
 	echo "Failed to retrieve version of existing $addon release from $2 add-ons server (retrieved ‘$oldver’).\nRelease aborted."
 	return 3
@@ -96,7 +107,7 @@ echo -n 'Confirm release? [Y/n] '
 typeset x
 read x
 if [[ $x = Y ]]; then
-	$3 -V -p $2 -u $1
+	$wam -V -p $2 -u $1
 	x=$?
 	if [[ -f packet.dump ]]; then
 		echo 'Note: wesnoth_addon_manager may have created a ‘packet.dump’ file, which you may want to delete.'
