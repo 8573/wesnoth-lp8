@@ -39,7 +39,7 @@ if [[ ! -e $pbl ]]; then
 	exit 2
 fi
 if [[ ! -f $pbl ]]; then
-	echo "‘$pbl’ does not exist or is not a regular file.\nRelease aborted."
+	echo "‘$pbl’ is not a regular file.\nRelease aborted."
 	exit 2
 fi
 
