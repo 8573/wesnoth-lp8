@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+emulate zsh
 
 default_wesnoth_tools_dir=~/src/wesnoth-old/data/tools
 
