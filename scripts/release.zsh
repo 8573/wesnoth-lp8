@@ -83,25 +83,34 @@ else
 	exit 2
 fi
 
-typeset oldver=$($wam -V -p $2 -l | grep -F "$addon" | awk '{print $7}')
-if [[ $oldver != <->.<->.<-> ]]; then
-	echo "Failed to retrieve version of existing $addon release from $2 add-ons server (retrieved ‘$oldver’).\nRelease aborted."
-	exit 3
+typeset addons="$($wam -V -p $2 -l)"
+if [[ -z $addons ]]; then
+	echo "Failed to retrieve add-on list from $2 add-ons server.\nRelease aborted."
+	exit 7
 fi
 
-typeset newver=$(grep -F 'version=' "$pbl" | sed -E 's/version="(.*)"/\1/')
+typeset oldver="$(grep -F "$addon" <(<<<$addons))"
+if [[ -n $oldver ]]; then
+	oldver="$(awk '{print $7}' <(<<<$oldver))"
+	if [[ $oldver != <->.<->.<-> ]]; then
+		echo "Failed to retrieve version of existing $addon release from $2 add-ons server (retrieved ‘$oldver’).\nRelease aborted."
+		exit 3
+	fi
+fi
+
+typeset newver="$(grep -F 'version=' "$pbl" | sed -E 's/version="(.*)"/\1/')"
 if [[ $newver != <->.<->.<-> ]]; then
 	echo "Failed to retrieve version of $addon to be released from ‘$pbl’ (retrieved ‘$newver’).\nRelease aborted."
 	exit 4
 fi
 
-if [[ $oldver = $newver ]]; then
+if [[ -n $oldver && $oldver = $newver ]]; then
 	echo "Version of $addon to be released equals version of $addon on $2 add-ons server (version ‘$oldver’).\nRelease aborted."
 	exit 5
 fi
 
 echo ----------------------------------------
-echo "Existing $addon release on $2 add-ons server is at version: ‘$oldver’"
+echo "Version of $addon currently on $2 add-ons server: ${${oldver:+‘$oldver’}:-(none)}"
 echo "Version of $addon to be released: ‘$newver’"
 echo -n 'Confirm release? [Y/n] '
 
