@@ -17,3 +17,4 @@ release: test
 		|| return $$(( ! $(ifroas) ))
 	@./scripts/release.zsh 8680s_Lua_Pack 1.11.x $(wamdir) \
 		|| return $$(( ! $(ifroas) ))
+	@./scripts/release.zsh 8680s_Lua_Pack 1.12.x $(wamdir)
