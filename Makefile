@@ -7,7 +7,7 @@ test::
 	@cd test && ./main.lua
 
 
-wamdir?=$(HOME)/src/wesnoth-tools
+wamdir?=$(HOME)/src/wesnoth/wesnoth-tools
 
 release: test
 	@./scripts/release.zsh 8680s_Lua_Pack 1.10.x $(wamdir)
