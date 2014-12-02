@@ -6,7 +6,7 @@ This module is automatically loaded if any other lp8 module is loaded.
 However, if you want to control the loading of lp8 dynamically from Lua rather
 than statically from WML, you can load just this module from WML:
 
-	{8680/lua-pack load}
+	{8680:lua-pack load}
 
 
 `lp8.lp8dir`
