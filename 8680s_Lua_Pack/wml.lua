@@ -106,7 +106,7 @@ local function getSubtags(p, f, b)
 	end
 	return b and flip(r) or r
 end
-lp8.export(getSubtag, 'get_subtag')
+lp8.export(getSubtags, 'get_subtags')
 
 local function getChild(p, f, n, i)
 	p, i = getSubtag(p, f, n, i)
